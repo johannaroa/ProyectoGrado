@@ -23,9 +23,13 @@ public class ButtonCreditsEvents : MonoBehaviour {
 
 	void MoveToCredits() {
 		if (applyMovement == true) {
-
 			step = speedCameraMovement * Time.deltaTime;
 			objectToMoved.transform.position = Vector3.MoveTowards (objectToMoved.transform.position, objectToFinish.transform.position, step);
+
+			if (objectToMoved.transform.position == objectToFinish.transform.position) {
+				// TODO: Separar la activación y desactivación en otro metodo para poder meterlo aquí y que no se rompa la app
+				applyMovement = false;
+			}
 		}
 
 	}
@@ -36,9 +40,19 @@ public class ButtonCreditsEvents : MonoBehaviour {
 		GameObject search = GameObject.Find ("Search");
 		GameObject credits = GameObject.Find ("Credits");
 		GameObject creditsText = GameObject.Find ("CreditsText");
+		GameObject back = GameObject.Find ("Back");
 
-		search.SetActive (false);
-		credits.SetActive (false);
+		search.GetComponent<Button> ().enabled = false;
+		search.GetComponentInChildren<CanvasRenderer>().SetAlpha(0);
+		search.GetComponentInChildren<Text>().color = Color.clear;
+
+		credits.GetComponent<Button> ().enabled = false;
+		credits.GetComponentInChildren<CanvasRenderer>().SetAlpha(0);
+		credits.GetComponentInChildren<Text>().color = Color.clear;
+
+		back.GetComponent<Button> ().enabled = true;
+		back.GetComponent<Image>().enabled = true;
+		back.GetComponentInChildren<Text>().enabled = true;
 
 		Text scriptText = creditsText.GetComponent<Text>();
 		scriptText.enabled = true;
