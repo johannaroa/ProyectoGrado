@@ -1469,7 +1469,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 436221347}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.5, y: 15.97, z: 27.28}
+  m_LocalPosition: {x: 19.5, y: 15.97, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2362,7 +2362,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 846911935}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -50, y: 12.1, z: 59.3}
+  m_LocalPosition: {x: -50, y: 12.1, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2661,8 +2661,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1010298819}
-  m_LocalRotation: {x: 0.08717232, y: 0.89959055, z: 0.21045254, w: -0.3726227}
-  m_LocalPosition: {x: 1048.4283, y: -691.5097, z: 636.92834}
+  m_LocalRotation: {x: 0.29500034, y: 0.6989127, z: 0.40231878, w: -0.5124797}
+  m_LocalPosition: {x: 51.532234, y: -78.241165, z: 70.285934}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2890,7 +2890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2910,7 +2910,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Ingrese art\xEDculo a buscar"
+  m_Text: 
 --- !u!222 &1069427457
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3112,8 +3112,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1243338389}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.31, y: -4.65, z: -15.05}
+  m_LocalRotation: {x: 0.06611547, y: 0.06640219, z: 0.004410392, w: -0.9955903}
+  m_LocalPosition: {x: 3.349518, y: -7.159672, z: -21.44627}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4708,7 +4708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b874b3ced624c50b03cde3c0b73e6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedCameraMovement: 20
+  speedCameraMovement: 50
   objectToMoved: {fileID: 63890327}
   objectToFinish: {fileID: 436221347}
 --- !u!114 &1901530143
@@ -4722,7 +4722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e05277f096b4bc7884edd4d7b2432f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedCameraMovement: 20
+  speedCameraMovement: 50
   objectToMoved: {fileID: 63890327}
   objectToFinish: {fileID: 547263047}
 --- !u!114 &1901530144
@@ -4736,7 +4736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94be2cad279f748a083541520000d18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedCameraMovement: 30
+  speedCameraMovement: 50
   objectToMoved: {fileID: 63890327}
   objectToFinish: {fileID: 846911935}
 --- !u!1 &1944718435
