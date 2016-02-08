@@ -31,7 +31,6 @@ public class ButtonBackEvents : MonoBehaviour {
 				applyMovement = false;
 			}
 		}
-
 	}
 
 	// TODO: mejorar este método ahora que defina bien el tema de organización de los Scripts
@@ -55,6 +54,7 @@ public class ButtonBackEvents : MonoBehaviour {
 		back.GetComponentInChildren<Text>().enabled = false;
 
 		Text scriptText = creditsText.GetComponent<Text>();
+		Debug.Log (scriptText.enabled);
 		scriptText.enabled = false;
 
 		applyMovement = true;

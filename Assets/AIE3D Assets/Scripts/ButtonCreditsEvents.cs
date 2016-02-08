@@ -55,6 +55,7 @@ public class ButtonCreditsEvents : MonoBehaviour {
 		back.GetComponentInChildren<Text>().enabled = true;
 
 		Text scriptText = creditsText.GetComponent<Text>();
+		Debug.Log (scriptText.enabled);
 		scriptText.enabled = true;
 
 		applyMovement = true;
