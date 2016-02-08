@@ -43,19 +43,19 @@ public class ButtonBackEvents : MonoBehaviour {
 		GameObject searchSpot = GameObject.Find ("SearchField");
 
 		search.GetComponent<Button> ().enabled = true;
-		search.GetComponentInChildren<CanvasRenderer>().SetAlpha(1);
-		search.GetComponentInChildren<Text>().color = Color.black;
+		search.GetComponentInChildren<CanvasRenderer> ().SetAlpha(1);
+		search.GetComponentInChildren<Text> ().color = Color.black;
 
 		credits.GetComponent<Button> ().enabled = true;
-		credits.GetComponentInChildren<CanvasRenderer>().SetAlpha(1);
-		credits.GetComponentInChildren<Text>().color = Color.black;
+		credits.GetComponentInChildren<CanvasRenderer> ().SetAlpha(1);
+		credits.GetComponentInChildren<Text> ().color = Color.black;
 
 		back.GetComponent<Button> ().enabled = false;
-		back.GetComponent<Image>().enabled = false;
+		back.GetComponent<Image> ().enabled = false;
 		back.GetComponentInChildren<Text>().enabled = false;
 
 		searchSpot.GetComponentInChildren<Image> ().enabled = false;
-		searchSpot.GetComponentInChildren <Text>().enabled = false;
+		searchSpot.GetComponentInChildren<Text> ().enabled = false;
 
 		creditsText.GetComponent<Text>().enabled = false;
 

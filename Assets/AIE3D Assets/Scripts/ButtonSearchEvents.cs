@@ -53,7 +53,7 @@ public class ButtonSearchEvents : MonoBehaviour {
 		back.GetComponentInChildren<Text>().enabled = true;
 
 		searchSpot.GetComponentInChildren<Image> ().enabled = true;
-		searchSpot.GetComponentInChildren <Text>().enabled = true;
+		searchSpot.GetComponentInChildren<Text> ().enabled = true;
 
 		applyMovement = true;
 
