@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ButtonSearchEvents : MonoBehaviour {
@@ -33,6 +34,26 @@ public class ButtonSearchEvents : MonoBehaviour {
 	}
 
 	public void SetApplyMovement() {
+
+		GameObject search = GameObject.Find ("Search");
+		GameObject searchSpot = GameObject.Find ("SearchField");
+		GameObject credits = GameObject.Find ("Credits");
+		GameObject back = GameObject.Find ("Back");
+
+		search.GetComponent<Button> ().enabled = false;
+		search.GetComponentInChildren<CanvasRenderer>().SetAlpha(0);
+		search.GetComponentInChildren<Text>().color = Color.clear;
+
+		credits.GetComponent<Button> ().enabled = false;
+		credits.GetComponentInChildren<CanvasRenderer>().SetAlpha(0);
+		credits.GetComponentInChildren<Text>().color = Color.clear;
+
+		back.GetComponent<Button> ().enabled = true;
+		back.GetComponent<Image>().enabled = true;
+		back.GetComponentInChildren<Text>().enabled = true;
+
+		searchSpot.GetComponentInChildren<Image> ().enabled = true;
+		searchSpot.GetComponentInChildren <Text>().enabled = true;
 
 		applyMovement = true;
 
