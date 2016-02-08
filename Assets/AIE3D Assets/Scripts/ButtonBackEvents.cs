@@ -38,7 +38,7 @@ public class ButtonBackEvents : MonoBehaviour {
 
 		GameObject search = GameObject.Find ("Search");
 		GameObject credits = GameObject.Find ("Credits");
-		GameObject creditsText = GameObject.Find ("CreditsText");
+		GameObject creditsText = GameObject.Find ("CreditsTextUI");
 		GameObject back = GameObject.Find ("Back");
 
 		search.GetComponent<Button> ().enabled = true;
@@ -53,9 +53,7 @@ public class ButtonBackEvents : MonoBehaviour {
 		back.GetComponent<Image>().enabled = false;
 		back.GetComponentInChildren<Text>().enabled = false;
 
-		Text scriptText = creditsText.GetComponent<Text>();
-		Debug.Log (scriptText.enabled);
-		scriptText.enabled = false;
+		creditsText.GetComponent<Text>().enabled = false;
 
 		applyMovement = true;
 

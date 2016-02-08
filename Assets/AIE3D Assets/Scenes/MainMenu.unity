@@ -1303,7 +1303,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Cr\xE9ditos\n"
+  m_Text: "Cr\xE9ditos"
 --- !u!222 &343149584
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2661,8 +2661,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1010298819}
-  m_LocalRotation: {x: 0.06771728, y: 0.035010193, z: 0.0023785215, w: -0.9970873}
-  m_LocalPosition: {x: 259.82553, y: -269.20157, z: -976.1893}
+  m_LocalRotation: {x: 0.08717232, y: 0.89959055, z: 0.21045254, w: -0.3726227}
+  m_LocalPosition: {x: 1048.4283, y: -691.5097, z: 636.92834}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3112,8 +3112,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1243338389}
-  m_LocalRotation: {x: 0.06611547, y: 0.06640219, z: 0.004410392, w: -0.9955903}
-  m_LocalPosition: {x: 3.349518, y: -7.159672, z: -21.44627}
+  m_LocalRotation: {x: 0.08717232, y: 0.89959055, z: 0.21045254, w: -0.3726227}
+  m_LocalPosition: {x: 6.337243, y: -5.0960693, z: 6.3372436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4493,7 +4493,7 @@ GameObject:
   - 222: {fileID: 1839839603}
   - 114: {fileID: 1839839602}
   m_Layer: 5
-  m_Name: CreditsText
+  m_Name: CreditsTextUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
