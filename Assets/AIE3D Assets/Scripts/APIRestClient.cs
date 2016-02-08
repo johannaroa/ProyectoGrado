@@ -21,7 +21,7 @@ public class APIRestClient : MonoBehaviour {
 	    */
 
 	    // Pasamos parámetro por GET
-	    WWW w = new WWW("http://localhost:8000/forest/v1/articles/");
+		WWW w = new WWW("http://localhost:8000/forest/v1/articles/");
 	    yield return w;
 
 	    yield return new WaitForSeconds(1f);
