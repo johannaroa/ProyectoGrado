@@ -15,7 +15,13 @@ public class APIRestClient: ScriptableObject {
 		if (webRequest.isError) {
 			Debug.Log (webRequest.error);
 		} else {
-			Debug.Log (webRequest.downloadHandler.text);
+
+			Debug.Log (Helpers.WrapToClass("articles", webRequest.downloadHandler.text));
+
+			ArticleListSerializable articleList = JsonUtility.FromJson<ArticleListSerializable> (
+				Helpers.WrapToClass(webRequest.downloadHandler.text, "articles")
+			);
+			Debug.Log (articleList.articles[0].titulo);
 		}
 	}
 
