@@ -4,14 +4,17 @@ using System.Collections;
 
 public class SearchFieldEvents : MonoBehaviour {
 
+	public GameObject Tree;
+
 	private void SubmitSearch(string query)
 	{
 		APIRestClient apiRestClient = ScriptableObject.CreateInstance ("APIRestClient") as APIRestClient;
 
-		StartCoroutine (apiRestClient.SearchArticle(query));
+		StartCoroutine (apiRestClient.SearchArticle(query));	
 	}
 
-	private void InitListener() {
+	private void InitListener() 
+	{
 		// TODO: Probar si en vez de poner esto aquí, que resultado da usar el evento OnEndEdit (en el GUI)
 		InputField input = gameObject.GetComponent<InputField>();
 		var se = new InputField.SubmitEvent();
@@ -20,13 +23,22 @@ public class SearchFieldEvents : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		InitListener ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+		if (APIRestClient.resultsAPI.Length > 0) {
+
+			foreach (ArticleSerializable lol in APIRestClient.resultsAPI) {
+				Debug.Log (lol.titulo + lol.contenido);
+				Instantiate (Tree);
+			}
+
+		}
 	}
 
 }
