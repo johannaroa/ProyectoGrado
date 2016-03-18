@@ -5,20 +5,15 @@ using System.Collections;
 public class SearchFieldEvents : MonoBehaviour {
 
 	public GameObject Tree;
+	private bool InitProcess = false;
 
 	private void PerformSearch(string query)
 	{
 		APIRestClient apiRestClient = ScriptableObject.CreateInstance ("APIRestClient") as APIRestClient;
 
 		StartCoroutine (apiRestClient.SearchArticle(query));
-	}
 
-	void PullLeafs(ArticleSerializable[] leafs) {
-		for (int i=0; i < leafs.Length; i++) {
-
-			Debug.Log ("Leaf: " + leafs[i]);
-			PullBranch (leafs[i]);
-		}
+		InitProcess = true;
 	}
 
 	void PullBranch(ArticleSerializable leaf) {
@@ -26,32 +21,37 @@ public class SearchFieldEvents : MonoBehaviour {
 		APIRestClient apiRestClient = ScriptableObject.CreateInstance ("APIRestClient") as APIRestClient;
 
 		StartCoroutine (apiRestClient.GetCategories (leaf.categories_link));
-
-		for (int i=0; i < APIRestClient.categories.Length; i++) {
-
-			Debug.Log ("Branch: " + APIRestClient.categories[i]);
-			PullTrunk (APIRestClient.categories[i]);
-		}
 	}
 
 	void PullTrunk(CategorySerializable branch) {
 		APIRestClient apiRestClient = ScriptableObject.CreateInstance ("APIRestClient") as APIRestClient;
 
 		StartCoroutine (apiRestClient.GetThematics(branch.thematic_link));
-		Debug.Log (APIRestClient.thematics);
-
 	}
 
-	public void BuildTree(ArticleSerializable[] articles) {
+	public IEnumerator BuildStructureTree(ArticleSerializable[] articles) {
 
-		PullLeafs (articles);
+		for (int i=0; i < articles.Length; i++) {
+
+			Debug.Log ("Leaf: " + articles[i].titulo + " " + articles[i].categories_link);
+			PullBranch (articles[i]);
+			yield return new WaitForSeconds (1f);
+
+			for (int j=0; j < APIRestClient.categories.Length; j++) {
+
+				Debug.Log ("Branch: " + APIRestClient.categories[j].nombre);
+				PullTrunk (APIRestClient.categories[j]);
+				yield return new WaitForSeconds (1f);
+
+				Debug.Log (APIRestClient.thematics[0].nombre);
+			}
+		}
 
 	}
 
 	private void ShowTrunk()
 	{
-	
-	
+
 	}
 
 	private void ShowBranch()
@@ -88,9 +88,10 @@ public class SearchFieldEvents : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (APIRestClient.resultsAPI.Length > 0) {
+		if (APIRestClient.resultsAPI.Length > 0 && InitProcess == true) {
 
-			BuildTree (APIRestClient.resultsAPI);
+			InitProcess = false;
+			StartCoroutine(BuildStructureTree (APIRestClient.resultsAPI));
 
 		}
 	}
