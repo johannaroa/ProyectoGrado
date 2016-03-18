@@ -5,6 +5,9 @@ using System.Collections;
 public class APIRestClient: ScriptableObject {
 
 	public static ArticleSerializable[] resultsAPI = new ArticleSerializable[0];
+	public static CategorySerializable[] categories = new CategorySerializable[0];
+	public static ThematicSerializable[] thematics = new ThematicSerializable[0];
+
 	private string url_server = "http://localhost:8000";
 
 	public IEnumerator SearchArticle(string query)
@@ -20,7 +23,38 @@ public class APIRestClient: ScriptableObject {
 			);
 
 			resultsAPI = articleList.articles;
+		} else {
+			Debug.Log (webRequest.error);
+		}
+	}
 
+	public IEnumerator GetCategories(string url) {
+
+		UnityWebRequest webRequest = UnityWebRequest.Get (url);
+		yield return webRequest.Send ();
+
+		if (!webRequest.isError) {
+			CategoryListSerializable categoryList = JsonUtility.FromJson<CategoryListSerializable> (
+                JSONHelpers.WrapToClass ("categories", webRequest.downloadHandler.text)                                        
+            );
+
+			categories = categoryList.categories;
+		} else {
+			Debug.Log (webRequest.error);
+		}
+	}
+
+	public IEnumerator GetThematics(string url) {
+	
+		UnityWebRequest webRequest = UnityWebRequest.Get (url);
+		yield return webRequest.Send ();
+
+		if (!webRequest.isError) {
+			ThematicListSerializable thematicList = JsonUtility.FromJson<ThematicListSerializable> (
+				JSONHelpers.WrapToClass ("thematics", webRequest.downloadHandler.text)                                        
+			);
+
+			thematics = thematicList.thematics;
 		} else {
 			Debug.Log (webRequest.error);
 		}
@@ -97,5 +131,5 @@ public class APIRestClient: ScriptableObject {
 	IEnumerator DeleteTheme() {
 		yield return null;
 	}
-
+		
 }
