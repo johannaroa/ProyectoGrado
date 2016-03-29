@@ -43,3 +43,4 @@ public class ThematicSerializable {
 public class ThematicListSerializable {
 	public ThematicSerializable[] thematics;
 }
+
