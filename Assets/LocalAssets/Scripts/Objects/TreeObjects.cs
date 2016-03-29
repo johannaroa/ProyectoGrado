@@ -11,6 +11,7 @@ public class Tree {
 }
 
 public class Trunk {
+	public int id;
 	public string name;
 	public List<Branch> branchs = new List<Branch> ();
 
@@ -21,6 +22,7 @@ public class Trunk {
 }
 
 public class Branch {
+	public int id;
 	public string name;
 	public List<Leaf> leafs = new List<Leaf> ();
 
@@ -31,6 +33,7 @@ public class Branch {
 }
 
 public class Leaf {
+	public int id;
 	public string name;
 
 	public Leaf(string new_name){

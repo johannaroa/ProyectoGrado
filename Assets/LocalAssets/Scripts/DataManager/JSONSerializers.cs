@@ -11,6 +11,7 @@ public static class JSONHelpers {
 }
 [System.Serializable]
 public class ArticleSerializable {
+	public int id;
 	public string titulo;
 	public string contenido;
 	public string categories_link;
@@ -23,6 +24,7 @@ public class ArticleListSerializable {
 
 [System.Serializable]
 public class CategorySerializable {
+	public int id;
 	public string nombre;
 	public string descripcion;
 	public string thematic_link;
@@ -35,6 +37,7 @@ public class CategoryListSerializable {
 
 [System.Serializable]
 public class ThematicSerializable {
+	public int id;
 	public string nombre;
 	public string descripcion;
 }

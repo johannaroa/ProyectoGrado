@@ -43,9 +43,20 @@ public class SearchFieldEvents : MonoBehaviour {
 				GetThematic (APIRestClient.categories[j]);
 				yield return new WaitForSeconds (1f);
 
-				Leaf leaf = new Leaf (articles [i].titulo);
-				Branch branch = new Branch (APIRestClient.categories [j].nombre, leaf);
-				Trunk trunk = new Trunk (APIRestClient.thematics [0].nombre, branch);
+				Leaf leaf = new Leaf (articles [i].titulo, articles [i].id);
+
+				Branch branch = FindExistingCategory (trees, APIRestClient.categories [j].id);
+
+				if (branch == null) {
+					branch = new Branch (APIRestClient.categories [j].nombre, APIRestClient.categories [j].id, leaf);
+				}
+
+				Trunk trunk = FindExistingThematic (trees, APIRestClient.thematics [0].id);
+
+				if (branch == null) {
+					trunk = new Trunk (APIRestClient.thematics [0].nombre, APIRestClient.thematics [0].id, branch);
+				} 
+
 				Tree tree = new Tree (trunk);
 
 				trees.Add (tree);
@@ -61,12 +72,29 @@ public class SearchFieldEvents : MonoBehaviour {
 
 	}
 
-	private void FindExistingCategory() {
-		// Search into structure data for find repeat branch
+	private void FindExistingCategory(List<Tree> trees, int branch_id) {
+		for (int i = 0; trees.Count <= i; i++) {
+			for (int j = 0; trees[i].trunk.branchs.Count <= j; j++) {
+				if (trees[i].trunk.branchs[j].id == branch_id) {
+					return trees [i].trunk.branchs [j];
+				}
+			}
+		}
+
+		return null;
 	}
 
-	private void FindExistingThematic() {
-	
+	private void FindExistingThematic(List<Tree> trees, int trunk_id) {
+		
+		for(int i=0; trees.Count <= i; i++) {
+
+			if (trees [i].trunk.id == trunk_id) {
+				return trees [i].trunk;
+			}
+
+			return null;
+		}
+
 	}
 
 	private void ShowTrunk()
