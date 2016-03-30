@@ -6,8 +6,15 @@ using System.Collections.Generic;
 public class SearchFieldEvents : MonoBehaviour {
 
 	public GameObject Tree;
-	private bool InitProcess = false;
 	private List<Tree> trees = new List<Tree> ();
+	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
+	StatusBuildTree status = StatusBuildTree.Idle;
+
+	// TODO: atendiendo al principio de la ocultación de la información, este métode debería recibir un parametro que no sea de tipo enum
+	// precisamente para ocultar el tipo de estructura de datos que se maneja por debajo
+	private void SetStatus(StatusBuildTree new_status) {
+		status = new_status;
+	}
 
 	private void GetArticles(string query)
 	{
@@ -15,7 +22,7 @@ public class SearchFieldEvents : MonoBehaviour {
 
 		StartCoroutine (apiRestClient.SearchArticle(query));
 
-		InitProcess = true;
+		SetStatus(StatusBuildTree.Init);
 	}
 
 	void GetCategories(ArticleSerializable leaf) {
@@ -33,12 +40,12 @@ public class SearchFieldEvents : MonoBehaviour {
 
 	public IEnumerator BuildStructureTree(ArticleSerializable[] articles) {
 
-		for (int i=0; i < articles.Length; i++) {
+		for (int i = 0; i < articles.Length; i++) {
 
 			GetCategories (articles[i]);
 			yield return new WaitForSeconds (1f);
 
-			for (int j=0; j < APIRestClient.categories.Length; j++) {
+			for (int j = 0; j < APIRestClient.categories.Length; j++) {
 
 				GetThematic (APIRestClient.categories[j]);
 				yield return new WaitForSeconds (1f);
@@ -49,32 +56,39 @@ public class SearchFieldEvents : MonoBehaviour {
 
 				if (branch == null) {
 					branch = new Branch (APIRestClient.categories [j].nombre, APIRestClient.categories [j].id, leaf);
+				} else {
+					branch.leafs.Add (leaf);
 				}
 
 				Trunk trunk = FindExistingThematic (trees, APIRestClient.thematics [0].id);
 
-				if (branch == null) {
+				if (trunk == null) {
 					trunk = new Trunk (APIRestClient.thematics [0].nombre, APIRestClient.thematics [0].id, branch);
-				} 
+					Tree tree = new Tree (trunk);
+					trees.Add (tree);
+				} else {
 
-				Tree tree = new Tree (trunk);
+					Branch existing_branch = trunk.branchs.Find (x => branch.id == x.id);
 
-				trees.Add (tree);
-
-				Debug.Log (
-					"TRUNK: " + APIRestClient.thematics [0].nombre + " BRANCH: " + APIRestClient.categories [j].nombre + " LEAF: " + articles [i].titulo 
-				);
+					if (existing_branch == null) {
+						trunk.branchs.Add (branch);
+					}
+				}
+//
+//				Debug.Log (
+//					"TRUNK: " + APIRestClient.thematics [0].nombre + " BRANCH: " + APIRestClient.categories [j].nombre + " LEAF: " + articles [i].titulo 
+//				);
 
 			}
 		}
 
-		Debug.Log (trees.Count);
-
+		SetStatus(StatusBuildTree.Completed);
 	}
 
-	private void FindExistingCategory(List<Tree> trees, int branch_id) {
-		for (int i = 0; trees.Count <= i; i++) {
-			for (int j = 0; trees[i].trunk.branchs.Count <= j; j++) {
+	private Branch FindExistingCategory(List<Tree> trees, int branch_id) {
+
+		for (int i = 0; i < trees.Count; i++) {
+			for (int j = 0; j < trees[i].trunk.branchs.Count; j++) {
 				if (trees[i].trunk.branchs[j].id == branch_id) {
 					return trees [i].trunk.branchs [j];
 				}
@@ -84,17 +98,14 @@ public class SearchFieldEvents : MonoBehaviour {
 		return null;
 	}
 
-	private void FindExistingThematic(List<Tree> trees, int trunk_id) {
+	private Trunk FindExistingThematic(List<Tree> trees, int trunk_id) {
 		
-		for(int i=0; trees.Count <= i; i++) {
-
+		for(int i = 0; i < trees.Count; i++) {
 			if (trees [i].trunk.id == trunk_id) {
 				return trees [i].trunk;
 			}
-
-			return null;
 		}
-
+		return null;
 	}
 
 	private void ShowTrunk()
@@ -116,6 +127,18 @@ public class SearchFieldEvents : MonoBehaviour {
 
 	private void ShowCompleteTrees()
 	{
+		foreach(Tree tree in trees) {
+			Debug.Log("TrunkX: " + tree.trunk.name);
+
+			foreach (Branch branch in tree.trunk.branchs) {
+				Debug.Log("BranchX: " + branch.name);
+
+				foreach (Leaf leaf in branch.leafs) {
+					Debug.Log("LeafX: " + leaf.name);
+				}
+			}
+		}
+		SetStatus (StatusBuildTree.Idle);
 	}
 
 	private void InitListener() 
@@ -136,10 +159,15 @@ public class SearchFieldEvents : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (APIRestClient.resultsAPI.Length > 0 && InitProcess == true) {
+		if (APIRestClient.resultsAPI.Length > 0 && (int)status == 2) {
 
-			InitProcess = false;
 			StartCoroutine(BuildStructureTree (APIRestClient.resultsAPI));
+			SetStatus (StatusBuildTree.InProcess);
+		}
+
+		if ((int)status == 1) {
+		
+			ShowCompleteTrees ();
 
 		}
 	}
