@@ -116,7 +116,7 @@ public class SearchFieldEvents : MonoBehaviour {
 
 	private void ShowTrunk(string name)
 	{
-		Instantiate (Trunk, coordenates, cam_rotation);
+		Instantiate (Trunk, coordenates, Trunk.transform.rotation);
 	}
 
 	private void ShowBranch()
@@ -129,16 +129,10 @@ public class SearchFieldEvents : MonoBehaviour {
 		Instantiate (Leaf, coordenates, cam_rotation);
 	}
 
-	private void ShowCompleteTree()
-	{
-	}
-
 	private void ShowCompleteTrees()
 	{
 
-		GameObject camera = GameObject.Find ("ForestCamera");
-		coordenates = camera.transform.position + camera.transform.forward * 50;
-		cam_rotation = camera.transform.rotation;
+		SetCameraValues ();
 
 		foreach(Tree tree in trees) {
 			Debug.Log("TrunkX: " + tree.trunk.name);
@@ -155,6 +149,13 @@ public class SearchFieldEvents : MonoBehaviour {
 			}
 		}
 		SetStatus (StatusBuildTree.Idle);
+	}
+
+	private void SetCameraValues () {
+		GameObject camera = GameObject.Find ("ForestCamera");
+		coordenates = camera.transform.position + camera.transform.forward * 30;
+		coordenates.y = 0f;
+		cam_rotation = camera.transform.rotation;
 	}
 
 	private void InitListener() 
