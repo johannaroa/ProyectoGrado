@@ -5,10 +5,16 @@ using System.Collections.Generic;
 
 public class SearchFieldEvents : MonoBehaviour {
 
-	public GameObject Tree;
+	public GameObject Trunk;
+	public GameObject Branch;
+	public GameObject Leaf;
 	private List<Tree> trees = new List<Tree> ();
+
 	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
 	StatusBuildTree status = StatusBuildTree.Idle;
+
+	Vector3 coordenates;
+	Quaternion cam_rotation;
 
 	// TODO: atendiendo al principio de la ocultación de la información, este métode debería recibir un parametro que no sea de tipo enum
 	// precisamente para ocultar el tipo de estructura de datos que se maneja por debajo
@@ -108,17 +114,19 @@ public class SearchFieldEvents : MonoBehaviour {
 		return null;
 	}
 
-	private void ShowTrunk()
+	private void ShowTrunk(string name)
 	{
-
+		Instantiate (Trunk, coordenates, cam_rotation);
 	}
 
 	private void ShowBranch()
 	{
+		Instantiate (Branch, coordenates, cam_rotation);
 	}
 
 	private void ShowLeaf()
 	{
+		Instantiate (Leaf, coordenates, cam_rotation);
 	}
 
 	private void ShowCompleteTree()
@@ -127,14 +135,22 @@ public class SearchFieldEvents : MonoBehaviour {
 
 	private void ShowCompleteTrees()
 	{
+
+		GameObject camera = GameObject.Find ("ForestCamera");
+		coordenates = camera.transform.position + camera.transform.forward * 50;
+		cam_rotation = camera.transform.rotation;
+
 		foreach(Tree tree in trees) {
 			Debug.Log("TrunkX: " + tree.trunk.name);
+			ShowTrunk (tree.trunk.name);
 
 			foreach (Branch branch in tree.trunk.branchs) {
 				Debug.Log("BranchX: " + branch.name);
+				ShowBranch ();
 
 				foreach (Leaf leaf in branch.leafs) {
 					Debug.Log("LeafX: " + leaf.name);
+					ShowLeaf ();
 				}
 			}
 		}

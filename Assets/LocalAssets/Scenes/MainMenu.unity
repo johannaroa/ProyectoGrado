@@ -276,7 +276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b7165b000b854354a16d9871172eccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tree: {fileID: 179656, guid: 9b14db6ca4bc944c4aee75e3a7fd5971, type: 2}
+  Trunk: {fileID: 155816, guid: 8f23a675a59154ceb961a63aab2d46d3, type: 2}
+  Branch: {fileID: 153530, guid: 27cc6dc6acd4443078aa198227d0e265, type: 2}
+  Leaf: {fileID: 149958, guid: 78203bb07e09944228c7545bc54128aa, type: 2}
 --- !u!1 &53825047
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +472,7 @@ GameObject:
   - 124: {fileID: 63890329}
   - 81: {fileID: 63890328}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: ForestCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -712,6 +714,68 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 1e84b98fc4c200c4aa16e1ec38895673, type: 3}
   m_PrefabInternal: {fileID: 1475830339}
+--- !u!1 &185762274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 185762276}
+  - 20: {fileID: 185762275}
+  m_Layer: 0
+  m_Name: Water4AdvancedReflectionForestCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &185762275
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 185762274}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967279
+  m_RenderingPath: 1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
+--- !u!4 &185762276
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 185762274}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.31, y: -4.65, z: -15.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
 --- !u!1001 &191729633
 Prefab:
   m_ObjectHideFlags: 0
@@ -2522,8 +2586,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1243338389}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.31, y: -4.65, z: -15.05}
+  m_LocalRotation: {x: 0.08717232, y: 0.89959055, z: 0.21045254, w: -0.3726227}
+  m_LocalPosition: {x: 10.624192, y: -15.459225, z: 17.674381}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
