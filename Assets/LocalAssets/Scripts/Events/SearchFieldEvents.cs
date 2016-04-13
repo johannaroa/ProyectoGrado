@@ -13,7 +13,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
 	StatusBuildTree status = StatusBuildTree.Idle;
 
-	Vector3 coordinates;
+	Vector3 coordinates_from_camera;
 	Quaternion cam_rotation;
 
 	// TODO: atendiendo al principio de la ocultación de la información, este métode debería recibir un parametro que no sea de tipo enum
@@ -120,14 +120,16 @@ public class SearchFieldEvents : MonoBehaviour {
 		Instantiate (Trunk, coordinates, Trunk.transform.rotation);
 	}
 
-	private void ShowBranch()
+	private void ShowBranch(string name, Vector3 coordinates, Vector3 branchAngles)
 	{
-		Instantiate (Branch, coordinates, cam_rotation);
+		GameObject branch = (GameObject)Instantiate (Branch, coordinates, Branch.transform.rotation);
+		branch.transform.eulerAngles = branchAngles;
 	}
 
-	private void ShowLeaf()
+	private void ShowLeaf(Vector3 coordinates)
 	{
-		Instantiate (Leaf, coordinates, cam_rotation);
+		// TODO: ubicar las hojas dentro de su respectiva rama. Esta es la tarea que sigue...
+		Instantiate (Leaf, coordinates, Leaf.transform.rotation);
 	}
 
 	private void ShowCompleteTrees()
@@ -137,22 +139,24 @@ public class SearchFieldEvents : MonoBehaviour {
 
 		foreach(Tree tree in trees) {
 			Debug.Log("TrunkX: " + tree.trunk.name);
-			ShowTrunk (tree.trunk.name, GenerateTerrainCoordinates());
+			Vector3 TrunkCoordinates = GenerateTrunkCoordinates ();
+			ShowTrunk (tree.trunk.name, TrunkCoordinates);
 
 			foreach (Branch branch in tree.trunk.branchs) {
 				Debug.Log("BranchX: " + branch.name);
-				ShowBranch ();
+				Vector3 branchAngles = GenerateBranchRotation ();
+				ShowBranch (branch.name, GenerateBranchCoordinates(TrunkCoordinates), branchAngles);
 
 				foreach (Leaf leaf in branch.leafs) {
 					Debug.Log("LeafX: " + leaf.name);
-					ShowLeaf ();
+					ShowLeaf (TrunkCoordinates);
 				}
 			}
 		}
 		SetStatus (StatusBuildTree.Idle);
 	}
 
-	private Vector3 GenerateTerrainCoordinates() {
+	private Vector3 GenerateTrunkCoordinates() {
 		float x = Random.Range (-90f, -10f);
 		float z = Random.Range (100f, 200f);
 
@@ -161,10 +165,29 @@ public class SearchFieldEvents : MonoBehaviour {
 		return coordinates;
 	}
 
+	private Vector3 GenerateBranchCoordinates(Vector3 TrunkCoordinates) {
+		float y = Random.Range (0f, 4f);
+
+		Vector3 coordinates = new Vector3 (TrunkCoordinates.x, y, TrunkCoordinates.z);
+
+		return coordinates;
+	}
+
+	private Vector3 GenerateBranchRotation() {
+
+		float y = Random.Range (0f, 350f);
+
+		Vector3 eulerAngles = Branch.transform.eulerAngles;
+		eulerAngles.y = y;
+
+		return eulerAngles;
+	
+	}
+
 	private void SetCameraValues () {
 		GameObject camera = GameObject.Find ("ForestCamera");
-		coordinates = camera.transform.position + camera.transform.forward * 30;
-		coordinates.y = 0f;
+		coordinates_from_camera = camera.transform.position + camera.transform.forward * 30;
+		coordinates_from_camera.y = 0f;
 		cam_rotation = camera.transform.rotation;
 	}
 
