@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Trunk: {fileID: 155816, guid: 8f23a675a59154ceb961a63aab2d46d3, type: 2}
-  Branch: {fileID: 153530, guid: 27cc6dc6acd4443078aa198227d0e265, type: 2}
+  Branch: {fileID: 181690, guid: 5206c33194d444589aba8c320212762a, type: 2}
   Leaf: {fileID: 176594, guid: 7166f69b5e9c442db9322752645fa42d, type: 2}
 --- !u!1 &53825047
 GameObject:
@@ -2956,8 +2956,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1010298819}
-  m_LocalRotation: {x: -0.0045252047, y: 0.87388563, z: 0.008135992, w: 0.4860425}
-  m_LocalPosition: {x: -52.450024, y: -1.6327032, z: 82.35319}
+  m_LocalRotation: {x: 0.09315904, y: 0.018202499, z: 0.0017034874, w: -0.9954834}
+  m_LocalPosition: {x: -46.263065, y: -18.803438, z: 4.2436676}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

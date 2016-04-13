@@ -13,7 +13,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
 	StatusBuildTree status = StatusBuildTree.Idle;
 
-	Vector3 coordenates;
+	Vector3 coordinates;
 	Quaternion cam_rotation;
 
 	// TODO: atendiendo al principio de la ocultación de la información, este métode debería recibir un parametro que no sea de tipo enum
@@ -114,19 +114,20 @@ public class SearchFieldEvents : MonoBehaviour {
 		return null;
 	}
 
-	private void ShowTrunk(string name)
-	{
-		Instantiate (Trunk, coordenates, Trunk.transform.rotation);
+	private void ShowTrunk(string name, Vector3 coordinates)
+	{	
+		
+		Instantiate (Trunk, coordinates, Trunk.transform.rotation);
 	}
 
 	private void ShowBranch()
 	{
-		Instantiate (Branch, coordenates, cam_rotation);
+		Instantiate (Branch, coordinates, cam_rotation);
 	}
 
 	private void ShowLeaf()
 	{
-		Instantiate (Leaf, coordenates, cam_rotation);
+		Instantiate (Leaf, coordinates, cam_rotation);
 	}
 
 	private void ShowCompleteTrees()
@@ -136,7 +137,7 @@ public class SearchFieldEvents : MonoBehaviour {
 
 		foreach(Tree tree in trees) {
 			Debug.Log("TrunkX: " + tree.trunk.name);
-			ShowTrunk (tree.trunk.name);
+			ShowTrunk (tree.trunk.name, GenerateTerrainCoordinates());
 
 			foreach (Branch branch in tree.trunk.branchs) {
 				Debug.Log("BranchX: " + branch.name);
@@ -151,10 +152,19 @@ public class SearchFieldEvents : MonoBehaviour {
 		SetStatus (StatusBuildTree.Idle);
 	}
 
+	private Vector3 GenerateTerrainCoordinates() {
+		float x = Random.Range (-90f, -10f);
+		float z = Random.Range (100f, 200f);
+
+		Vector3 coordinates = new Vector3 (x, 0f, z);
+
+		return coordinates;
+	}
+
 	private void SetCameraValues () {
 		GameObject camera = GameObject.Find ("ForestCamera");
-		coordenates = camera.transform.position + camera.transform.forward * 30;
-		coordenates.y = 0f;
+		coordinates = camera.transform.position + camera.transform.forward * 30;
+		coordinates.y = 0f;
 		cam_rotation = camera.transform.rotation;
 	}
 
