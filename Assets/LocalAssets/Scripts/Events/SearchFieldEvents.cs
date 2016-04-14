@@ -13,9 +13,6 @@ public class SearchFieldEvents : MonoBehaviour {
 	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
 	StatusBuildTree status = StatusBuildTree.Idle;
 
-	Vector3 coordinates_from_camera;
-	Quaternion cam_rotation;
-
 	// TODO: atendiendo al principio de la ocultación de la información, este métode debería recibir un parametro que no sea de tipo enum
 	// precisamente para ocultar el tipo de estructura de datos que se maneja por debajo
 	private void SetStatus(StatusBuildTree new_status) {
@@ -126,16 +123,17 @@ public class SearchFieldEvents : MonoBehaviour {
 		branch.transform.eulerAngles = branchAngles;
 	}
 
-	private void ShowLeaf(Vector3 coordinates)
+	private void ShowLeaf(Vector3 coordinates, Vector3 angles)
 	{
 		// TODO: ubicar las hojas dentro de su respectiva rama. Esta es la tarea que sigue...
-		Instantiate (Leaf, coordinates, Leaf.transform.rotation);
+		GameObject leaf = (GameObject)Instantiate (Leaf, coordinates, Leaf.transform.rotation);
+		Vector3 lol = leaf.transform.eulerAngles;
+		lol.y = angles.y;
+		leaf.transform.eulerAngles = lol;
 	}
 
 	private void ShowCompleteTrees()
 	{
-
-		SetCameraValues ();
 
 		foreach(Tree tree in trees) {
 			Debug.Log("TrunkX: " + tree.trunk.name);
@@ -144,12 +142,13 @@ public class SearchFieldEvents : MonoBehaviour {
 
 			foreach (Branch branch in tree.trunk.branchs) {
 				Debug.Log("BranchX: " + branch.name);
+				Vector3 branchCoordinates = GenerateBranchCoordinates (TrunkCoordinates);
 				Vector3 branchAngles = GenerateBranchRotation ();
-				ShowBranch (branch.name, GenerateBranchCoordinates(TrunkCoordinates), branchAngles);
+				ShowBranch (branch.name, branchCoordinates, branchAngles);
 
 				foreach (Leaf leaf in branch.leafs) {
 					Debug.Log("LeafX: " + leaf.name);
-					ShowLeaf (TrunkCoordinates);
+					ShowLeaf (GenerateLeafCoordinates(branchCoordinates), branchAngles);
 				}
 			}
 		}
@@ -165,16 +164,15 @@ public class SearchFieldEvents : MonoBehaviour {
 		return coordinates;
 	}
 
-	private Vector3 GenerateBranchCoordinates(Vector3 TrunkCoordinates) {
+	private Vector3 GenerateBranchCoordinates(Vector3 trunkCoordinates) {
 		float y = Random.Range (0f, 4f);
 
-		Vector3 coordinates = new Vector3 (TrunkCoordinates.x, y, TrunkCoordinates.z);
+		Vector3 coordinates = new Vector3 (trunkCoordinates.x, y, trunkCoordinates.z);
 
 		return coordinates;
 	}
 
 	private Vector3 GenerateBranchRotation() {
-
 		float y = Random.Range (0f, 350f);
 
 		Vector3 eulerAngles = Branch.transform.eulerAngles;
@@ -184,13 +182,20 @@ public class SearchFieldEvents : MonoBehaviour {
 	
 	}
 
-	private void SetCameraValues () {
-		GameObject camera = GameObject.Find ("ForestCamera");
-		coordinates_from_camera = camera.transform.position + camera.transform.forward * 30;
-		coordinates_from_camera.y = 0f;
-		cam_rotation = camera.transform.rotation;
+	private Vector3 GenerateLeafCoordinates(Vector3 branchCoordinates) {
+		// float x = branchCoordinates.x + 1f;
+		float y = branchCoordinates.y + 3.53f;
+
+		Vector3 coordinates = new Vector3 (branchCoordinates.x, y, branchCoordinates.z);
+
+		return coordinates;
 	}
 
+	private void GenerateLeafRotation() {
+		//c ll
+
+	}
+		
 	private void InitListener() 
 	{
 		// TODO: Probar si en vez de poner esto aquí, que resultado da usar el evento OnEndEdit (en el GUI)
