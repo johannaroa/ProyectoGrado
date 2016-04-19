@@ -140,21 +140,22 @@ public class SearchFieldEvents : MonoBehaviour {
 
 	private GameObject ShowLeaf(Vector3 coordinates, Vector3 angles, GameObject branch)
 	{
-		Mesh mesh = branch.GetComponent<MeshFilter>().mesh;
-		Vector3[] vertices = mesh.vertices;
+		Vector3[] vertices = branch.GetComponent<MeshFilter>().mesh.vertices;
 
-		// TODO: ubicar las hojas dentro de su respectiva rama. Esta es la tarea que sigue...
-		GameObject leaf = (GameObject)Instantiate (PrefabLeaf, branch.transform.TransformPoint(vertices[6]), PrefabLeaf.transform.rotation);
-		Vector3 lol = leaf.transform.eulerAngles;
-		lol.y = angles.y;
-		leaf.transform.eulerAngles = lol;
+		int vertice_random = Random.Range (0, vertices.Length);
+
+		Vector3 lol = branch.transform.TransformPoint (vertices [vertice_random]);
+		lol.y = lol.y + 0.4f;
+
+		GameObject leaf = (GameObject)Instantiate (
+			PrefabLeaf,
+			lol,
+			PrefabLeaf.transform.rotation
+		);
+		Vector3 temporal_angles = leaf.transform.eulerAngles;
+		temporal_angles.y = angles.y;
+		leaf.transform.eulerAngles = temporal_angles;
 		//leaf.transform.SetParent (branch.transform);
-
-		int i = 0;
-		while (i < vertices.Length) {
-			Debug.Log (vertices[i] + "Vertex: " + i);
-			i++;
-		}
 
 		return leaf;
 	}
