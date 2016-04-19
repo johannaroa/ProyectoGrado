@@ -5,10 +5,12 @@ using System.Collections.Generic;
 
 public class SearchFieldEvents : MonoBehaviour {
 
-	public GameObject Trunk;
-	public GameObject Branch;
-	public GameObject Leaf;
-	private List<Tree> trees = new List<Tree> ();
+	public GameObject PrefabTree;
+	public GameObject PrefabTrunk;
+	public GameObject PrefabBranch;
+	public GameObject PrefabLeaf;
+
+	private List<TreePlus> trees = new List<TreePlus> ();
 
 	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
 	StatusBuildTree status = StatusBuildTree.Idle;
@@ -67,7 +69,7 @@ public class SearchFieldEvents : MonoBehaviour {
 
 				if (trunk == null) {
 					trunk = new Trunk (APIRestClient.thematics [0].nombre, APIRestClient.thematics [0].id, branch);
-					Tree tree = new Tree (trunk);
+					TreePlus tree = new TreePlus (trunk);
 					trees.Add (tree);
 				} else {
 
@@ -88,7 +90,7 @@ public class SearchFieldEvents : MonoBehaviour {
 		SetStatus(StatusBuildTree.Completed);
 	}
 
-	private Branch FindExistingCategory(List<Tree> trees, int branch_id) {
+	private Branch FindExistingCategory(List<TreePlus> trees, int branch_id) {
 
 		for (int i = 0; i < trees.Count; i++) {
 			for (int j = 0; j < trees[i].trunk.branchs.Count; j++) {
@@ -101,7 +103,7 @@ public class SearchFieldEvents : MonoBehaviour {
 		return null;
 	}
 
-	private Trunk FindExistingThematic(List<Tree> trees, int trunk_id) {
+	private Trunk FindExistingThematic(List<TreePlus> trees, int trunk_id) {
 		
 		for(int i = 0; i < trees.Count; i++) {
 			if (trees [i].trunk.id == trunk_id) {
@@ -111,44 +113,73 @@ public class SearchFieldEvents : MonoBehaviour {
 		return null;
 	}
 
-	private void ShowTrunk(string name, Vector3 coordinates)
+	private GameObject ShowTree(Vector3 coordinates) {
+		GameObject tree = (GameObject)Instantiate (PrefabTree, coordinates, Quaternion.identity);
+
+		return tree;
+	}
+
+	private GameObject ShowTrunk(string name, Vector3 coordinates, GameObject tree)
 	{	
 		
-		Instantiate (Trunk, coordinates, Trunk.transform.rotation);
+		GameObject trunk = (GameObject)Instantiate (PrefabTrunk, coordinates, PrefabTrunk.transform.rotation);
+		//trunk.transform.SetParent (tree.transform);
+
+		return trunk;
 	}
 
-	private void ShowBranch(string name, Vector3 coordinates, Vector3 branchAngles)
+	private GameObject ShowBranch(string name, Vector3 coordinates, Vector3 branchAngles, GameObject trunk)
 	{
-		GameObject branch = (GameObject)Instantiate (Branch, coordinates, Branch.transform.rotation);
+
+		GameObject branch = (GameObject)Instantiate (PrefabBranch, coordinates, PrefabBranch.transform.rotation);
 		branch.transform.eulerAngles = branchAngles;
+		//branch.transform.SetParent (trunk.transform);
+	
+		return branch;
 	}
 
-	private void ShowLeaf(Vector3 coordinates, Vector3 angles)
+	private GameObject ShowLeaf(Vector3 coordinates, Vector3 angles, GameObject branch)
 	{
+		Mesh mesh = branch.GetComponent<MeshFilter>().mesh;
+		Vector3[] vertices = mesh.vertices;
+
 		// TODO: ubicar las hojas dentro de su respectiva rama. Esta es la tarea que sigue...
-		GameObject leaf = (GameObject)Instantiate (Leaf, coordinates, Leaf.transform.rotation);
+		GameObject leaf = (GameObject)Instantiate (PrefabLeaf, branch.transform.TransformPoint(vertices[6]), PrefabLeaf.transform.rotation);
 		Vector3 lol = leaf.transform.eulerAngles;
 		lol.y = angles.y;
 		leaf.transform.eulerAngles = lol;
+		//leaf.transform.SetParent (branch.transform);
+
+		int i = 0;
+		while (i < vertices.Length) {
+			Debug.Log (vertices[i] + "Vertex: " + i);
+			i++;
+		}
+
+		return leaf;
 	}
 
 	private void ShowCompleteTrees()
 	{
 
-		foreach(Tree tree in trees) {
-			Debug.Log("TrunkX: " + tree.trunk.name);
+		foreach(TreePlus tree in trees) {
+
 			Vector3 TrunkCoordinates = GenerateTrunkCoordinates ();
-			ShowTrunk (tree.trunk.name, TrunkCoordinates);
+
+			GameObject currentTree = ShowTree (TrunkCoordinates);
+
+			// Debug.Log("TrunkX: " + tree.trunk.name);
+			GameObject currentTrunk = ShowTrunk (tree.trunk.name, TrunkCoordinates, currentTree);
 
 			foreach (Branch branch in tree.trunk.branchs) {
-				Debug.Log("BranchX: " + branch.name);
+				// Debug.Log("BranchX: " + branch.name);
 				Vector3 branchCoordinates = GenerateBranchCoordinates (TrunkCoordinates);
 				Vector3 branchAngles = GenerateBranchRotation ();
-				ShowBranch (branch.name, branchCoordinates, branchAngles);
+				GameObject currentBranch = ShowBranch (branch.name, branchCoordinates, branchAngles, currentTrunk);
 
 				foreach (Leaf leaf in branch.leafs) {
-					Debug.Log("LeafX: " + leaf.name);
-					ShowLeaf (GenerateLeafCoordinates(branchCoordinates), branchAngles);
+					// Debug.Log("LeafX: " + leaf.name);
+					ShowLeaf (GenerateLeafCoordinates(branchCoordinates), branchAngles, currentBranch);
 				}
 			}
 		}
@@ -175,7 +206,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	private Vector3 GenerateBranchRotation() {
 		float y = Random.Range (0f, 350f);
 
-		Vector3 eulerAngles = Branch.transform.eulerAngles;
+		Vector3 eulerAngles = PrefabBranch.transform.eulerAngles;
 		eulerAngles.y = y;
 
 		return eulerAngles;
@@ -183,10 +214,11 @@ public class SearchFieldEvents : MonoBehaviour {
 	}
 
 	private Vector3 GenerateLeafCoordinates(Vector3 branchCoordinates) {
-		// float x = branchCoordinates.x + 1f;
+		float x = branchCoordinates.x + 1f;
 		float y = branchCoordinates.y + 3.53f;
+		float z = branchCoordinates.z + 1f;
 
-		Vector3 coordinates = new Vector3 (branchCoordinates.x, y, branchCoordinates.z);
+		Vector3 coordinates = new Vector3 (x, y, z);
 
 		return coordinates;
 	}
@@ -209,6 +241,12 @@ public class SearchFieldEvents : MonoBehaviour {
 	void Start () 
 	{
 		InitListener ();
+//		Debug.Log(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[0]);
+//		Debug.Log(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[1]);
+//		Debug.Log(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[2]);
+//		Debug.Log(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[3]);
+//		print (transform.TransformPoint(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[3]));
+//		Instantiate (PrefabLeaf, GameObject.Find ("Cube").transform.TransformPoint(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[3]), Quaternion.identity);
 	}
 	
 	// Update is called once per frame

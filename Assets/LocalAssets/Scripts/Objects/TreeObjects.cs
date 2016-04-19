@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Tree {
+public class TreePlus {
 	public Trunk trunk;
 
-	public Tree(Trunk new_trunk) {
+	public TreePlus(Trunk new_trunk) {
 		trunk = new_trunk;
 	}
 }
