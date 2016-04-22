@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Example code source
 public class AnimalProperties
 {
 	public Sprite miSprite;

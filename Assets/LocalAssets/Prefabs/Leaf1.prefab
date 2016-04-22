@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 434252}
   - 33: {fileID: 3321058}
   - 23: {fileID: 2329616}
+  - 114: {fileID: 11454286}
   m_Layer: 0
   m_Name: Leaf1
   m_TagString: Untagged
@@ -62,6 +63,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176594}
   m_Mesh: {fileID: 4300004, guid: af6588a742f7b4cab964ea28070c1c68, type: 3}
+--- !u!114 &11454286
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c7bebee589174ae0a611c9f52a80617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
