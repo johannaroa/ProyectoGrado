@@ -141,15 +141,14 @@ public class SearchFieldEvents : MonoBehaviour {
 	private GameObject ShowLeaf(Vector3 coordinates, Vector3 angles, GameObject branch)
 	{
 		Vector3[] vertices = branch.GetComponent<MeshFilter>().mesh.vertices;
-
 		int vertice_random = Random.Range (0, vertices.Length);
+		Vector3 vectorGlobal = branch.transform.TransformPoint (vertices [vertice_random]);
 
-		Vector3 lol = branch.transform.TransformPoint (vertices [vertice_random]);
-		lol.y = lol.y + 0.4f;
+		vectorGlobal.y = vectorGlobal.y + 0.4f;
 
 		GameObject leaf = (GameObject)Instantiate (
 			PrefabLeaf,
-			lol,
+			vectorGlobal,
 			PrefabLeaf.transform.rotation
 		);
 		Vector3 temporal_angles = leaf.transform.eulerAngles;

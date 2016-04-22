@@ -66,7 +66,7 @@ public class MoveCamera : MonoBehaviour
 		// Move the camera on it's XY plane
 		if (isPanning)
 		{
-			Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - mouseOrigin);
+	        	Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - mouseOrigin);
 
 	        	Vector3 move = new Vector3(pos.x * panSpeed, pos.y * panSpeed, 0);
 	        	transform.Translate(move, Space.Self);
