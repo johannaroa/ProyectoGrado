@@ -3,9 +3,13 @@ using System.Collections;
 
 public class LeafEvents : MonoBehaviour {
 
+	public GameObject articlePanel;
+
 	void OnMouseDown() {
 
-		print ("Suash pop-up");
+		GameObject canvas = GameObject.Find ("Canvas");
+		GameObject articlePanelInstance = (GameObject)Instantiate (articlePanel);
+		articlePanelInstance.transform.SetParent (canvas.transform);
 
 	}
 
