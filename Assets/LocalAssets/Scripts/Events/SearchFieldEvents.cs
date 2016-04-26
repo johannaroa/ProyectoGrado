@@ -10,7 +10,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	public GameObject PrefabBranch;
 	public GameObject PrefabLeaf;
 
-	private List<TreePlus> trees = new List<TreePlus> ();
+	private List<Leaf> leaves = new List<Leaf> ();
 
 	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
 	StatusBuildTree status = StatusBuildTree.Idle;
@@ -55,31 +55,24 @@ public class SearchFieldEvents : MonoBehaviour {
 				GetThematic (APIRestClient.categories[j]);
 				yield return new WaitForSeconds (1f);
 
-				Leaf leaf = new Leaf (articles [i].titulo, articles [i].id);
+				TreePlus tree = new TreePlus ("arbol");
 
-				Branch branch = FindExistingCategory (trees, APIRestClient.categories [j].id);
+				// Trunk trunk = FindExistingThematic (leaves, APIRestClient.thematics [0].id);
 
-				if (branch == null) {
-					branch = new Branch (APIRestClient.categories [j].nombre, APIRestClient.categories [j].id, leaf);
+				Trunk trunk = new Trunk (APIRestClient.thematics [0].id, APIRestClient.thematics [0].nombre, tree);
+
+				// Branch branch = FindExistingCategory (leaves, APIRestClient.categories [j].id);
+
+				Branch branch = new Branch (APIRestClient.categories [j].id, APIRestClient.categories [j].nombre, trunk);
+
+				Leaf leaf = FindExistingArticle(leaves, articles [i].id);
+				if (leaf == null) {
+					leaf = new Leaf (articles [i].id, articles [i].titulo, branch);
+					leaves.Add (leaf);
 				} else {
-					branch.leafs.Add (leaf);
+					leaf.branchs.Add(branch);
 				}
-
-				Trunk trunk = FindExistingThematic (trees, APIRestClient.thematics [0].id);
-
-				if (trunk == null) {
-					trunk = new Trunk (APIRestClient.thematics [0].nombre, APIRestClient.thematics [0].id, branch);
-					TreePlus tree = new TreePlus (trunk);
-					trees.Add (tree);
-				} else {
-
-					Branch existing_branch = trunk.branchs.Find (x => branch.id == x.id);
-
-					if (existing_branch == null) {
-						trunk.branchs.Add (branch);
-					}
-				}
-//
+					
 //				Debug.Log (
 //					"TRUNK: " + APIRestClient.thematics [0].nombre + " BRANCH: " + APIRestClient.categories [j].nombre + " LEAF: " + articles [i].titulo 
 //				);
@@ -90,24 +83,35 @@ public class SearchFieldEvents : MonoBehaviour {
 		SetStatus(StatusBuildTree.Completed);
 	}
 
-	private Branch FindExistingCategory(List<TreePlus> trees, int branch_id) {
+//	private Branch FindExistingCategory(List<Leaf> leaves, int branch_id) {
+//
+//		for (int i = 0; i < leaves.Count; i++) {
+//			for (int j = 0; j < leaves[i].branchs.Count; j++) {
+//				if (leaves[i].branchs[j].id == branch_id) {
+//					return leaves [i].branchs [j];
+//				}
+//			}
+//		}
+//
+//		return null;
+//	}
 
-		for (int i = 0; i < trees.Count; i++) {
-			for (int j = 0; j < trees[i].trunk.branchs.Count; j++) {
-				if (trees[i].trunk.branchs[j].id == branch_id) {
-					return trees [i].trunk.branchs [j];
-				}
-			}
-		}
+//	private Trunk FindExistingThematic(List<Leaf> leaves, int trunk_id) {
+//		
+//		for(int i = 0; i < leaves.Count; i++) {
+//			for (int j = 0; j < leaves[i].branchs.Count; j++) {
+//				if (leaves[i].branchs[j].trunk.id == trunk_id) {
+//					return leaves [i].branchs [j].trunk;
+//				}
+//			}
+//		}
+//		return null;
+//	}
 
-		return null;
-	}
-
-	private Trunk FindExistingThematic(List<TreePlus> trees, int trunk_id) {
-		
-		for(int i = 0; i < trees.Count; i++) {
-			if (trees [i].trunk.id == trunk_id) {
-				return trees [i].trunk;
+	private Leaf FindExistingArticle(List<Leaf> leaves, int leaf_id) {
+		for(int i = 0; i < leaves.Count; i++) {
+			if (leaves[i].id == leaf_id) {
+				return leaves [i];
 			}
 		}
 		return null;
@@ -119,26 +123,26 @@ public class SearchFieldEvents : MonoBehaviour {
 		return tree;
 	}
 
-	private GameObject ShowTrunk(string name, Vector3 coordinates, GameObject tree)
+	private GameObject ShowTrunk(Trunk new_trunk, Vector3 coordinates, GameObject tree)
 	{	
 		
 		GameObject trunk = (GameObject)Instantiate (PrefabTrunk, coordinates, PrefabTrunk.transform.rotation);
-		//trunk.transform.SetParent (tree.transform);
+		// trunk.transform.SetParent (tree.transform);
 
 		return trunk;
 	}
 
-	private GameObject ShowBranch(string name, Vector3 coordinates, Vector3 branchAngles, GameObject trunk)
+	private GameObject ShowBranch(Branch new_branch, Vector3 coordinates, Vector3 branchAngles, GameObject trunk)
 	{
 
 		GameObject branch = (GameObject)Instantiate (PrefabBranch, coordinates, PrefabBranch.transform.rotation);
 		branch.transform.eulerAngles = branchAngles;
-		//branch.transform.SetParent (trunk.transform);
+		// branch.transform.SetParent (trunk.transform);
 	
 		return branch;
 	}
 
-	private GameObject ShowLeaf(Vector3 coordinates, Vector3 angles, GameObject branch)
+	private GameObject ShowLeaf(Leaf new_leaf, Vector3 coordinates, Vector3 angles, GameObject branch)
 	{
 		Vector3[] vertices = branch.GetComponent<MeshFilter>().mesh.vertices;
 		int vertice_random = Random.Range (0, vertices.Length);
@@ -154,33 +158,41 @@ public class SearchFieldEvents : MonoBehaviour {
 		Vector3 temporal_angles = leaf.transform.eulerAngles;
 		temporal_angles.y = angles.y;
 		leaf.transform.eulerAngles = temporal_angles;
-		//leaf.transform.SetParent (branch.transform);
+		LeafEvents leafEvents = leaf.GetComponent<LeafEvents> ();
+		leafEvents.leaf = new_leaf;
+		leafEvents.leaf_name = new_leaf.name;
+		// leaf.transform.SetParent (branch.transform);
 
 		return leaf;
 	}
 
 	private void ShowCompleteTrees()
 	{
+		Trunk temporalTrunk = null;
+		GameObject currentTrunk = null;
+		Vector3 trunkCoordinates = GenerateTrunkCoordinates ();
 
-		foreach(TreePlus tree in trees) {
+		foreach(Leaf leaf in leaves) {
 
-			Vector3 TrunkCoordinates = GenerateTrunkCoordinates ();
 
-			GameObject currentTree = ShowTree (TrunkCoordinates);
+			foreach (Branch branch in leaf.branchs) {
+				print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
 
-			// Debug.Log("TrunkX: " + tree.trunk.name);
-			GameObject currentTrunk = ShowTrunk (tree.trunk.name, TrunkCoordinates, currentTree);
+				if (temporalTrunk == null || temporalTrunk.id != branch.trunk.id) {
 
-			foreach (Branch branch in tree.trunk.branchs) {
-				// Debug.Log("BranchX: " + branch.name);
-				Vector3 branchCoordinates = GenerateBranchCoordinates (TrunkCoordinates);
-				Vector3 branchAngles = GenerateBranchRotation ();
-				GameObject currentBranch = ShowBranch (branch.name, branchCoordinates, branchAngles, currentTrunk);
+					GameObject currentTree = ShowTree (trunkCoordinates);
 
-				foreach (Leaf leaf in branch.leafs) {
-					// Debug.Log("LeafX: " + leaf.name);
-					ShowLeaf (GenerateLeafCoordinates(branchCoordinates), branchAngles, currentBranch);
+					currentTrunk = ShowTrunk (branch.trunk, trunkCoordinates, currentTree);
+					temporalTrunk = branch.trunk;
+					trunkCoordinates = GenerateTrunkCoordinates ();
 				}
+
+				Vector3 branchCoordinates = GenerateBranchCoordinates (trunkCoordinates);
+				Vector3 branchAngles = GenerateBranchRotation ();
+
+				GameObject currentBranch = ShowBranch (branch, branchCoordinates, branchAngles, currentTrunk);
+
+				ShowLeaf (leaf, GenerateLeafCoordinates(branchCoordinates), branchAngles, currentBranch);
 			}
 		}
 		SetStatus (StatusBuildTree.Idle);
@@ -221,11 +233,6 @@ public class SearchFieldEvents : MonoBehaviour {
 		Vector3 coordinates = new Vector3 (x, y, z);
 
 		return coordinates;
-	}
-
-	private void GenerateLeafRotation() {
-		//c ll
-
 	}
 		
 	private void InitListener() 

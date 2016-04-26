@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class LeafEvents : MonoBehaviour {
+
+	public Leaf leaf;
+	public string leaf_name;
 
 	void Activate (GameObject articlePanel) {
 		articlePanel.GetComponent<Image> ().enabled = true;

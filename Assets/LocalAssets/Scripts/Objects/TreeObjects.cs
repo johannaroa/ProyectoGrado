@@ -3,43 +3,45 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class TreePlus {
-	public Trunk trunk;
+	public string name;
 
-	public TreePlus(Trunk new_trunk) {
-		trunk = new_trunk;
+	public TreePlus(string new_name) {
+		name = new_name;
 	}
 }
 
 public class Trunk {
 	public int id;
 	public string name;
-	public List<Branch> branchs = new List<Branch> ();
+	public TreePlus tree;
 
-	public Trunk(string new_name, int new_id, Branch new_branch) {
-		name = new_name;
+	public Trunk(int new_id, string new_name, TreePlus new_tree) {
 		id = new_id;
-		branchs.Add (new_branch);
+		name = new_name;
+		tree = new TreePlus(new_tree.name);
 	}
 }
 
 public class Branch {
 	public int id;
 	public string name;
-	public List<Leaf> leafs = new List<Leaf> ();
+	public Trunk trunk;
 
-	public Branch (string new_name, int new_id, Leaf new_leaf) {
-		name = new_name;
+	public Branch (int new_id, string new_name, Trunk new_trunk) {
 		id = new_id;
-		leafs.Add(new_leaf);
+		name = new_name;
+		trunk = new Trunk(new_trunk.id, new_trunk.name, new_trunk.tree);
 	}
 }
 
 public class Leaf {
 	public int id;
 	public string name;
+	public List<Branch> branchs = new List<Branch> ();
 
-	public Leaf(string new_name, int new_id){
-		name = new_name;
+	public Leaf(int new_id, string new_name, Branch new_branch){
 		id = new_id;
+		name = new_name;
+		branchs.Add(new_branch);
 	}
 }
