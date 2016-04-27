@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BranchEvents : MonoBehaviour {
 
+	public Branch branch;
 	public string branch_name;
 
 	// Use this for initialization

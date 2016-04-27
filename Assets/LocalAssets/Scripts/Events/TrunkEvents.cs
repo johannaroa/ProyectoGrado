@@ -3,7 +3,8 @@ using System.Collections;
 
 public class TrunkEvents : MonoBehaviour {
 
-	public string name;
+	public Trunk trunk;
+	public string trunk_name;
 
 	// Use this for initialization
 	void Start () {

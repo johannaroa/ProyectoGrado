@@ -64,7 +64,7 @@ public class SearchFieldEvents : MonoBehaviour {
 
 				Leaf leaf = FindExistingArticle(leaves, articles [i].id);
 				if (leaf == null) {
-					leaf = new Leaf (articles [i].id, articles [i].titulo, branch);
+					leaf = new Leaf (articles [i].id, articles [i].titulo, articles [i].contenido, branch);
 					leaves.Add (leaf);
 				} else {
 					leaf.branchs.Add(branch);
@@ -98,7 +98,8 @@ public class SearchFieldEvents : MonoBehaviour {
 		trunk.transform.SetParent (tree.transform);
 
 		TrunkEvents trunkEvents = trunk.GetComponent<TrunkEvents> ();
-		trunkEvents.name = new_trunk.name;
+		trunkEvents.trunk = new_trunk;
+		trunkEvents.trunk_name = new_trunk.name;
 
 		return trunk;
 	}
@@ -111,15 +112,16 @@ public class SearchFieldEvents : MonoBehaviour {
 		branch.transform.SetParent (trunk.transform);
 	
 		BranchEvents branchEvents = branch.GetComponent<BranchEvents> ();
+		branchEvents.branch = new_branch;
 		branchEvents.branch_name = new_branch.name;
 
 		return branch;
 	}
 
-	private GameObject ShowLeaf(Leaf new_leaf, Vector3 coordinates, Vector3 angles, GameObject branch)
+	private GameObject ShowLeaf(Leaf new_leaf, Vector3 coordinates, Vector3 branchAngles, GameObject branch)
 	{
 		Vector3[] vertices = branch.GetComponent<MeshFilter>().mesh.vertices;
-		int vertice_random = Random.Range (0, vertices.Length);
+		int vertice_random = Random.Range (5, vertices.Length);
 		Vector3 vectorGlobal = branch.transform.TransformPoint (vertices [vertice_random]);
 
 		vectorGlobal.y = vectorGlobal.y + 0.4f;
@@ -130,17 +132,18 @@ public class SearchFieldEvents : MonoBehaviour {
 			PrefabLeaf.transform.rotation
 		);
 		Vector3 temporal_angles = leaf.transform.eulerAngles;
-		temporal_angles.y = angles.y;
+		temporal_angles.y = branchAngles.y;
 		leaf.transform.eulerAngles = temporal_angles;
+		leaf.transform.SetParent (branch.transform);
+
 		LeafEvents leafEvents = leaf.GetComponent<LeafEvents> ();
 		leafEvents.leaf = new_leaf;
 		leafEvents.leaf_name = new_leaf.name;
-		leaf.transform.SetParent (branch.transform);
 
 		return leaf;
 	}
 
-	private void ShowCompleteTrees()
+	private void ShowForest()
 	{
 		Trunk temporalTrunk = null;
 		Branch temporalBranch = null;
@@ -150,7 +153,7 @@ public class SearchFieldEvents : MonoBehaviour {
 		foreach(Leaf leaf in leaves) {
 
 			foreach (Branch branch in leaf.branchs) {
-				// print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
+				print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
 
 				if (temporalTrunk == null || temporalTrunk.id != branch.trunk.id) {
 
@@ -170,10 +173,8 @@ public class SearchFieldEvents : MonoBehaviour {
 						branchAngles = GenerateBranchRotation ();
 
 						currentBranch = ShowBranch (branch, branchCoordinates, branchAngles, currentTrunk);
-
 						temporalBranch = branch;
 					} else {
-						print ("PEoo");
 						branchCoordinates = existingBranch.transform.position;
 						branchAngles = existingBranch.transform.eulerAngles;
 
@@ -227,11 +228,11 @@ public class SearchFieldEvents : MonoBehaviour {
 	}
 
 	private BranchEvents FindExistingBranch (GameObject trunk, Branch branch) {
-		BranchEvents[] lol = trunk.transform.GetComponentsInChildren <BranchEvents>();
+		BranchEvents[] branchEvents = trunk.transform.GetComponentsInChildren <BranchEvents>();
 
-		foreach(BranchEvents kol in lol) {
-			if (kol.branch_name == branch.name) {
-				return kol;
+		foreach(BranchEvents branchEvent in branchEvents) {
+			if (branchEvent.branch.id == branch.id) {
+				return branchEvent;
 			}
 		}
 		return null;
@@ -263,7 +264,7 @@ public class SearchFieldEvents : MonoBehaviour {
 
 		if ((int)status == 1) {
 		
-			ShowCompleteTrees ();
+			ShowForest ();
 
 		}
 	}

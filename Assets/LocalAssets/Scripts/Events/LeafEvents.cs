@@ -15,6 +15,18 @@ public class LeafEvents : MonoBehaviour {
 
 		foreach (Text text in texts) {
 			text.enabled = true;
+
+			if (text.transform.name == "TitleContent") {
+				text.text = leaf.name;
+			} else
+				if (text.transform.name == "DescriptionContent") {
+					text.text = leaf.description;	
+				} else
+					if (text.transform.name == "CategoriesContent") {
+						foreach (Branch branch in leaf.branchs) {
+							text.text += "* " + branch.name + "\n";
+						}
+					}
 		}
 	}
 
@@ -24,12 +36,22 @@ public class LeafEvents : MonoBehaviour {
 
 		foreach (Text text in texts) {
 			text.enabled = false;
+
+			if (text.transform.name == "CategoriesContent") {
+				text.text = "";
+			}
 		}
+
 	}
 
-	void OnMouseDown() {
+	void OnMouseEnter() {
 		GameObject articlePanel = GameObject.Find ("ArticlePanel");
 		Activate (articlePanel);
+	}
+
+	void OnMouseExit() {
+		GameObject articlePanel = GameObject.Find ("ArticlePanel");
+		Deactivate (articlePanel);
 	}
 
 	// Use this for initialization

@@ -37,11 +37,13 @@ public class Branch {
 public class Leaf {
 	public int id;
 	public string name;
+	public string description;
 	public List<Branch> branchs = new List<Branch> ();
 
-	public Leaf(int new_id, string new_name, Branch new_branch){
+	public Leaf(int new_id, string new_name, string new_description, Branch new_branch){
 		id = new_id;
 		name = new_name;
+		description = new_description;
 		branchs.Add(new_branch);
 	}
 }
