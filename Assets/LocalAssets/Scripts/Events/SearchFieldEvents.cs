@@ -70,14 +70,8 @@ public class SearchFieldEvents : MonoBehaviour {
 					leaf.branchs.Add(branch);
 				}
 					
-//				Debug.Log (
-//					"TRUNK: " + APIRestClient.thematics [0].nombre + " BRANCH: " + APIRestClient.categories [j].nombre + " LEAF: " + articles [i].titulo 
-//				);
-
 			}
 		}
-
-		// leaves = leaves.OrderBy (x => x.branchs.OrderBy(y => y.name).ToList()).ToList();
 
 		SetStatus(StatusBuildTree.Completed);
 	}
@@ -146,17 +140,6 @@ public class SearchFieldEvents : MonoBehaviour {
 		return leaf;
 	}
 
-	private BranchEvents FindExistingBranch (GameObject trunk, Branch branch) {
-		BranchEvents[] lol = trunk.transform.GetComponentsInChildren <BranchEvents>();
-
-		foreach(BranchEvents kol in lol) {
-			if (kol.branch_name == branch.name) {
-				return kol;
-			}
-		}
-		return null;
-	}
-
 	private void ShowCompleteTrees()
 	{
 		Trunk temporalTrunk = null;
@@ -167,7 +150,7 @@ public class SearchFieldEvents : MonoBehaviour {
 		foreach(Leaf leaf in leaves) {
 
 			foreach (Branch branch in leaf.branchs) {
-				print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
+				// print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
 
 				if (temporalTrunk == null || temporalTrunk.id != branch.trunk.id) {
 
@@ -242,6 +225,17 @@ public class SearchFieldEvents : MonoBehaviour {
 
 		return coordinates;
 	}
+
+	private BranchEvents FindExistingBranch (GameObject trunk, Branch branch) {
+		BranchEvents[] lol = trunk.transform.GetComponentsInChildren <BranchEvents>();
+
+		foreach(BranchEvents kol in lol) {
+			if (kol.branch_name == branch.name) {
+				return kol;
+			}
+		}
+		return null;
+	}
 		
 	private void InitListener() 
 	{
@@ -256,12 +250,6 @@ public class SearchFieldEvents : MonoBehaviour {
 	void Start () 
 	{
 		InitListener ();
-//		Debug.Log(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[0]);
-//		Debug.Log(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[1]);
-//		Debug.Log(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[2]);
-//		Debug.Log(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[3]);
-//		print (transform.TransformPoint(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[3]));
-//		Instantiate (PrefabLeaf, GameObject.Find ("Cube").transform.TransformPoint(GameObject.Find ("Cube").GetComponent<MeshFilter>().mesh.vertices[3]), Quaternion.identity);
 	}
 	
 	// Update is called once per frame
