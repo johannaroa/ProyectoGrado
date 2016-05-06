@@ -18,6 +18,10 @@ obj/
 *.user
 *.unityproj
 *.booproj
+Assets/uwebkit
+Assets/uwebkit.meta
+Assets/uwebkitexamples
+Assets/uwebkitexamples.meta
 
 # Quizas no versionar los .meta?
 #*.meta
