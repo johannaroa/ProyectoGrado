@@ -41,6 +41,7 @@ public class ButtonBackEvents : MonoBehaviour {
 		GameObject creditsText = GameObject.Find ("CreditsTextUI");
 		GameObject back = GameObject.Find ("Back");
 		GameObject searchSpot = GameObject.Find ("SearchField");
+		GameObject add = GameObject.Find ("Add");
 
 		search.GetComponent<Button> ().enabled = true;
 		search.GetComponentInChildren<CanvasRenderer> ().SetAlpha(1);
@@ -49,6 +50,10 @@ public class ButtonBackEvents : MonoBehaviour {
 		credits.GetComponent<Button> ().enabled = true;
 		credits.GetComponentInChildren<CanvasRenderer> ().SetAlpha(1);
 		credits.GetComponentInChildren<Text> ().color = Color.black;
+
+		add.GetComponent<Button> ().enabled = true;
+		add.GetComponentInChildren<CanvasRenderer> ().SetAlpha(1);
+		add.GetComponentInChildren<Text> ().color = Color.black;
 
 		back.GetComponent<Button> ().enabled = false;
 		back.GetComponent<Image> ().enabled = false;

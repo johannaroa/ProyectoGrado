@@ -39,6 +39,7 @@ public class ButtonSearchEvents : MonoBehaviour {
 		GameObject searchSpot = GameObject.Find ("SearchField");
 		GameObject credits = GameObject.Find ("Credits");
 		GameObject back = GameObject.Find ("Back");
+		GameObject add = GameObject.Find ("Add");
 
 		search.GetComponent<Button> ().enabled = false;
 		search.GetComponentInChildren<CanvasRenderer>().SetAlpha(0);
@@ -47,6 +48,10 @@ public class ButtonSearchEvents : MonoBehaviour {
 		credits.GetComponent<Button> ().enabled = false;
 		credits.GetComponentInChildren<CanvasRenderer>().SetAlpha(0);
 		credits.GetComponentInChildren<Text>().color = Color.clear;
+
+		add.GetComponent<Button> ().enabled = false;
+		add.GetComponentInChildren<CanvasRenderer>().SetAlpha(0);
+		add.GetComponentInChildren<Text>().color = Color.clear;
 
 		back.GetComponent<Button> ().enabled = true;
 		back.GetComponent<Image>().enabled = true;
