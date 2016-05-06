@@ -28,6 +28,9 @@ public class LeafEvents : MonoBehaviour {
 						}
 					}
 		}
+
+		PlayerPrefs.SetString ("url", "http://ec2-54-213-189-135.us-west-2.compute.amazonaws.com/admin/bosque/articulo/" + leaf.id);
+
 	}
 
 	void Deactivate (GameObject articlePanel) {
