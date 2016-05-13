@@ -5,10 +5,13 @@ public class BranchEvents : MonoBehaviour {
 
 	public Branch branch;
 	public string branch_name;
+	private string url;
 
 	// Use this for initialization
 	void Start () {
-		PlayerPrefs.SetString ("url", "http://ec2-54-213-189-135.us-west-2.compute.amazonaws.com/admin/bosque/categoria/" + 1);
+		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
+
+		PlayerPrefs.SetString ("url", url + "/admin/bosque/categoria/" + 1);
 	}
 	
 	// Update is called once per frame

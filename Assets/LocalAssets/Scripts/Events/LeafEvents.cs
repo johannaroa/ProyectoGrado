@@ -8,10 +8,16 @@ public class LeafEvents : MonoBehaviour {
 
 	public Leaf leaf;
 	public string leaf_name;
+	private string url;
 
 	void Activate (GameObject articlePanel) {
 		articlePanel.GetComponent<Image> ().enabled = true;
 		Text[] texts = articlePanel.GetComponentsInChildren<Text> ();
+		Image[] images = articlePanel.GetComponentsInChildren<Image> ();
+
+		foreach (Image image in images) {
+			image.enabled = true;
+		}
 
 		foreach (Text text in texts) {
 			text.enabled = true;
@@ -29,13 +35,18 @@ public class LeafEvents : MonoBehaviour {
 					}
 		}
 
-		PlayerPrefs.SetString ("url", "http://ec2-54-213-189-135.us-west-2.compute.amazonaws.com/admin/bosque/articulo/" + leaf.id);
+		PlayerPrefs.SetString ("url", url + "/admin/bosque/articulo/" + leaf.id);
 
 	}
 
 	void Deactivate (GameObject articlePanel) {
 		articlePanel.GetComponent<Image> ().enabled = false;
 		Text[] texts = articlePanel.GetComponentsInChildren<Text> ();
+		Image[] images = articlePanel.GetComponentsInChildren<Image> ();
+
+		foreach (Image image in images) {
+			image.enabled = false;
+		}
 
 		foreach (Text text in texts) {
 			text.enabled = false;
@@ -47,23 +58,19 @@ public class LeafEvents : MonoBehaviour {
 
 	}
 
-	void OnMouseEnter() {
+	void OnMouseDown() {
 		GameObject articlePanel = GameObject.Find ("ArticlePanel");
 		Activate (articlePanel);
-	}
-
-	void OnMouseExit() {
-		GameObject articlePanel = GameObject.Find ("ArticlePanel");
-		Deactivate (articlePanel);
+		print (PlayerPrefs.GetString("url"));
 	}
 
 	// Use this for initialization
 	void Start () {
-
+		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 }

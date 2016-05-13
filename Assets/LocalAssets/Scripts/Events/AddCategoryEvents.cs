@@ -4,9 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class AddCategoryEvents : MonoBehaviour {
 
+	private string url;
+
 	// Use this for initialization
 	void Start () {
-	
+		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 	}
 	
 	// Update is called once per frame
@@ -15,7 +17,7 @@ public class AddCategoryEvents : MonoBehaviour {
 	}
 
 	public void LoadWebGUI() {
-		PlayerPrefs.SetString ("url", "http://ec2-54-213-189-135.us-west-2.compute.amazonaws.com/admin/bosque/categoria/add/");
+		PlayerPrefs.SetString ("url", url + "/admin/bosque/categoria/add/");
 		SceneManager.LoadScene ("WebGUIAdmin");
 	}
 }
