@@ -1369,6 +1369,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 391436143}
   - 114: {fileID: 391436142}
+  - 114: {fileID: 391436144}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -1400,6 +1401,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &391436144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 391436141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 195618ee6ee364ad391b027d1a8946ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchSpot: {fileID: 0}
+  forestCamera: {fileID: 0}
 --- !u!4 &398488801 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 1e2ef0cc5c65717479848f40d793d3ee, type: 3}
@@ -2905,8 +2919,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1010298819}
-  m_LocalRotation: {x: 0.08717232, y: 0.89959055, z: 0.21045254, w: -0.3726227}
-  m_LocalPosition: {x: 18.225996, y: -13.418196, z: 18.225998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.31, y: -4.65, z: -15.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4320,8 +4334,8 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5, y: -120}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0, y: -120}
+  m_SizeDelta: {x: 86.8, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1453233638
 MonoBehaviour:
@@ -4685,8 +4699,8 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 86.7, y: 129.8}
-  m_SizeDelta: {x: 33.2, y: 25.7}
+  m_AnchoredPosition: {x: 93.1, y: 134.2}
+  m_SizeDelta: {x: 25.7, y: 18.614}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1604177185
 MonoBehaviour:
@@ -4766,7 +4780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9264706, g: 0.5586072, b: 0.0068122903, a: 1}
+  m_Color: {r: 0.8455882, g: 0.43805927, b: 0.17409171, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

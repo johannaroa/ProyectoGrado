@@ -68,7 +68,7 @@ public class LocalWebGUIExample : MonoBehaviour
 
         brect.y += 30;
 
-        if (GUI.Button(brect, "Menú principal"))
+        if (GUI.Button(brect, "Regresar"))
         {
             SceneManager.LoadScene("Main");
         }

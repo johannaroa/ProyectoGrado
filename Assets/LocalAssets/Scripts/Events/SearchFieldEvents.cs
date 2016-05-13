@@ -22,8 +22,18 @@ public class SearchFieldEvents : MonoBehaviour {
 		status = new_status;
 	}
 
-	private void GetArticles(string query)
+	private void DestroyPrevForest() {
+		GameObject[] forest = GameObject.FindGameObjectsWithTag("GenerateTree");
+		foreach(GameObject tree in forest) {
+			Destroy (tree);
+		}
+	}
+
+	public void GetArticles(string query)
 	{
+		DestroyPrevForest ();
+		PlayerPrefs.SetString ("query", query);
+
 		APIRestClient apiRestClient = ScriptableObject.CreateInstance ("APIRestClient") as APIRestClient;
 
 		StartCoroutine (apiRestClient.SearchArticle(query));
