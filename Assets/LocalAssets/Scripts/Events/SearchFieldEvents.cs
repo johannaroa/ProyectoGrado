@@ -56,7 +56,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	}
 
 	public IEnumerator BuildStructureTree(ArticleSerializable[] articles) {
-		leaves new List<Leaf> ();
+		leaves = new List<Leaf> ();
 
 		for (int i = 0; i < articles.Length; i++) {
 
