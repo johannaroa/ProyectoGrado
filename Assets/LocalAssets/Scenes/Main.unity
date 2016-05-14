@@ -222,7 +222,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: Lol
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.InputField+OnChangeEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
@@ -1369,7 +1380,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 391436143}
   - 114: {fileID: 391436142}
-  - 114: {fileID: 391436144}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -1401,19 +1411,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &391436144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 391436141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 195618ee6ee364ad391b027d1a8946ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  searchSpot: {fileID: 0}
-  forestCamera: {fileID: 0}
 --- !u!4 &398488801 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 1e2ef0cc5c65717479848f40d793d3ee, type: 3}
@@ -2920,7 +2917,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1010298819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.31, y: -4.65, z: -15.05}
+  m_LocalPosition: {x: 357.53, y: -226.66, z: -1156.8673}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3620,7 +3617,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22451684, guid: 8b97f72186e4046d3827d26d310468ea, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 2.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22451684, guid: 8b97f72186e4046d3827d26d310468ea, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -3628,7 +3625,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22451684, guid: 8b97f72186e4046d3827d26d310468ea, type: 2}
       propertyPath: m_SizeDelta.x
-      value: -12
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 22451684, guid: 8b97f72186e4046d3827d26d310468ea, type: 2}
       propertyPath: m_SizeDelta.y
@@ -4699,8 +4696,8 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 93.1, y: 134.2}
-  m_SizeDelta: {x: 25.7, y: 18.614}
+  m_AnchoredPosition: {x: 92.48, y: 135.62}
+  m_SizeDelta: {x: 28, y: 22.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1604177185
 MonoBehaviour:

@@ -11,7 +11,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	public GameObject PrefabBranch;
 	public GameObject PrefabLeaf;
 
-	private List<Leaf> leaves = new List<Leaf> ();
+	private List<Leaf> leaves;
 
 	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
 	StatusBuildTree status = StatusBuildTree.Idle;
@@ -31,8 +31,9 @@ public class SearchFieldEvents : MonoBehaviour {
 
 	public void GetArticles(string query)
 	{
+		print (query + " QUERYSIN");
 		DestroyPrevForest ();
-		PlayerPrefs.SetString ("query", query);
+		// PlayerPrefs.SetString ("query", query);
 
 		APIRestClient apiRestClient = ScriptableObject.CreateInstance ("APIRestClient") as APIRestClient;
 
@@ -55,6 +56,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	}
 
 	public IEnumerator BuildStructureTree(ArticleSerializable[] articles) {
+		leaves new List<Leaf> ();
 
 		for (int i = 0; i < articles.Length; i++) {
 
@@ -163,7 +165,7 @@ public class SearchFieldEvents : MonoBehaviour {
 		foreach(Leaf leaf in leaves) {
 
 			foreach (Branch branch in leaf.branchs) {
-				print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
+				// print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
 
 				if (temporalTrunk == null || temporalTrunk.id != branch.trunk.id) {
 
@@ -266,6 +268,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+
 		if (APIRestClient.resultsAPI.Length > 0 && (int)status == 2) {
 
 			StartCoroutine(BuildStructureTree (APIRestClient.resultsAPI));

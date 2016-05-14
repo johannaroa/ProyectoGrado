@@ -8,10 +8,15 @@ public class APIRestClient: ScriptableObject {
 	public static CategorySerializable[] categories = new CategorySerializable[0];
 	public static ThematicSerializable[] thematics = new ThematicSerializable[0];
 
-	private string url_server = "http://localhost:8000";
+	private string url_server;
 
 	public IEnumerator SearchArticle(string query)
 	{
+		if (resultsAPI.Length > 0) {
+			resultsAPI = new ArticleSerializable[0];
+		}
+
+		url_server = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 		string endPoint = "/forest/v1/articles/?search=";
 
 		UnityWebRequest webRequest = UnityWebRequest.Get(url_server + endPoint + query);
@@ -60,57 +65,9 @@ public class APIRestClient: ScriptableObject {
 		}
 	}
 
-	public IEnumerator AddArticle() 
-	{
-		string endPoint = "/forest/v1/articles/";
-
-		WWWForm form = new WWWForm ();
-		form.AddField("name", "Test");
-
-		UnityWebRequest webRequest = UnityWebRequest.Post (url_server + endPoint, form);
-		yield return webRequest.Send ();
-
-		if (webRequest.isError) {
-			Debug.Log (webRequest.error);
-		} else {
-			Debug.Log ("Post completed!");
-		}
-	}
-
-	IEnumerator AddCategory() {
-		yield return null;
-	}
-
-	IEnumerator AddTheme() {
-		yield return null;
-	}
-
-	IEnumerator UpdateArticle() {
-
-		string endPoint = "";
-
-		string myData = "";
-		UnityWebRequest webRequest = UnityWebRequest.Put (url_server + endPoint, myData);
-		yield return webRequest.Send() ;
-
-		if(webRequest.isError) {
-			Debug.Log(webRequest.error);
-		}
-		else {
-			Debug.Log("Put completed!");
-		}
-	}
-
-	IEnumerator UpdateCategory() {
-		yield return null;
-	}
-
-	IEnumerator UpdateTheme() {
-		yield return null;
-	}
-
 	IEnumerator DeleteArticle() {
 	
+		url_server = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 		string endPoint = "";
 
 		UnityWebRequest webRequest = UnityWebRequest.Delete (url_server + endPoint);
