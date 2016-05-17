@@ -29,6 +29,8 @@ public class LocalWebGUIExample : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		PlayerPrefs.SetInt ("fromMain", 0);
+
         webGUI = gameObject.GetComponent<LocalWebGUI>();
         UWKWebView = gameObject.GetComponent<UWKWebView>();
 

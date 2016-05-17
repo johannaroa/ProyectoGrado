@@ -31,9 +31,9 @@ public class SearchFieldEvents : MonoBehaviour {
 
 	public void GetArticles(string query)
 	{
-		print (query + " QUERYSIN");
 		DestroyPrevForest ();
-		// PlayerPrefs.SetString ("query", query);
+		PlayerPrefs.SetString ("query", query);
+		PlayerPrefs.SetInt ("fromMain", 1);
 
 		APIRestClient apiRestClient = ScriptableObject.CreateInstance ("APIRestClient") as APIRestClient;
 
