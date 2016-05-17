@@ -12,6 +12,7 @@ public class TrunkEvents : MonoBehaviour {
 		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 
 		PlayerPrefs.SetString ("url", url + "/admin/bosque/tematica/" + 1);
+		PlayerPrefs.SetInt ("trunkId", trunk.id);
 	}
 	
 	// Update is called once per frame

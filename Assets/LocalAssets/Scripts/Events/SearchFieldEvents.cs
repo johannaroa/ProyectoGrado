@@ -107,6 +107,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	{	
 		
 		GameObject trunk = (GameObject)Instantiate (PrefabTrunk, coordinates, PrefabTrunk.transform.rotation);
+		trunk.name = trunk.name + "-id" + new_trunk.id;
 		trunk.transform.SetParent (tree.transform);
 
 		TrunkEvents trunkEvents = trunk.GetComponent<TrunkEvents> ();
@@ -120,6 +121,8 @@ public class SearchFieldEvents : MonoBehaviour {
 	{
 
 		GameObject branch = (GameObject)Instantiate (PrefabBranch, coordinates, PrefabBranch.transform.rotation);
+
+		branch.name = branch.name + "-id" + new_branch.id;
 		branch.transform.eulerAngles = branchAngles;
 		branch.transform.SetParent (trunk.transform);
 	
@@ -143,6 +146,8 @@ public class SearchFieldEvents : MonoBehaviour {
 			vectorGlobal,
 			PrefabLeaf.transform.rotation
 		);
+		leaf.name = leaf.name + "-id" + new_leaf.id;
+
 		Vector3 temporal_angles = leaf.transform.eulerAngles;
 		temporal_angles.y = branchAngles.y;
 		leaf.transform.eulerAngles = temporal_angles;

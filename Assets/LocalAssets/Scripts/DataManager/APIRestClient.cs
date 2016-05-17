@@ -8,7 +8,7 @@ public class APIRestClient: ScriptableObject {
 	public static CategorySerializable[] categories = new CategorySerializable[0];
 	public static ThematicSerializable[] thematics = new ThematicSerializable[0];
 
-	private string url_server;
+	private string url;
 
 	public IEnumerator SearchArticle(string query)
 	{
@@ -16,10 +16,10 @@ public class APIRestClient: ScriptableObject {
 			resultsAPI = new ArticleSerializable[0];
 		}
 
-		url_server = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
+		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 		string endPoint = "/forest/v1/articles/?search=";
 
-		UnityWebRequest webRequest = UnityWebRequest.Get(url_server + endPoint + query);
+		UnityWebRequest webRequest = UnityWebRequest.Get(url + endPoint + query);
 		yield return webRequest.Send ();
 
 		if (!webRequest.isError) {
@@ -65,12 +65,11 @@ public class APIRestClient: ScriptableObject {
 		}
 	}
 
-	IEnumerator DeleteArticle() {
-	
-		url_server = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
-		string endPoint = "";
+	public IEnumerator DeleteArticle(int leafId) {
+		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
+		string endPoint = "/forest/v1/articles/";
 
-		UnityWebRequest webRequest = UnityWebRequest.Delete (url_server + endPoint);
+		UnityWebRequest webRequest = UnityWebRequest.Delete (url + endPoint + leafId);
 		yield return webRequest.Send ();
 
 		if(webRequest.isError) {
@@ -81,12 +80,34 @@ public class APIRestClient: ScriptableObject {
 		}
 	}
 
-	IEnumerator DeleteCategory() {
-		yield return null;
+	public IEnumerator DeleteCategory(int branchId) {
+		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
+		string endPoint = "/forest/v1/categories/";
+
+		UnityWebRequest webRequest = UnityWebRequest.Delete (url + endPoint + branchId);
+		yield return webRequest.Send ();
+
+		if(webRequest.isError) {
+			Debug.Log(webRequest.error);
+		}
+		else {
+			Debug.Log("Delete completed!");
+		}
 	}
 
-	IEnumerator DeleteTheme() {
-		yield return null;
+	public IEnumerator DeleteThematic(int trunkId) {
+		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
+		string endPoint = "/forest/v1/thematics/";
+
+		UnityWebRequest webRequest = UnityWebRequest.Delete (url + endPoint + trunkId);
+		yield return webRequest.Send ();
+
+		if(webRequest.isError) {
+			Debug.Log(webRequest.error);
+		}
+		else {
+			Debug.Log("Delete completed!");
+		}
 	}
 		
 }

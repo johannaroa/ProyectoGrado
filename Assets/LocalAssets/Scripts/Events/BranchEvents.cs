@@ -12,6 +12,7 @@ public class BranchEvents : MonoBehaviour {
 		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 
 		PlayerPrefs.SetString ("url", url + "/admin/bosque/categoria/" + 1);
+		PlayerPrefs.SetInt ("branchId", branch.id);
 	}
 	
 	// Update is called once per frame

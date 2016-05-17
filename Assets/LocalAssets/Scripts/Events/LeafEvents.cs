@@ -34,9 +34,6 @@ public class LeafEvents : MonoBehaviour {
 						}
 					}
 		}
-
-		PlayerPrefs.SetString ("url", url + "/admin/bosque/articulo/" + leaf.id);
-
 	}
 
 	void Deactivate (GameObject articlePanel) {
@@ -67,6 +64,9 @@ public class LeafEvents : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
+	
+		PlayerPrefs.SetString ("url", url + "/admin/bosque/articulo/" + leaf.id);
+		PlayerPrefs.SetInt ("leafId", leaf.id);
 	}
 	
 	// Update is called once per frame
