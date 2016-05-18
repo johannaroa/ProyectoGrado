@@ -13,11 +13,13 @@ public class TreePlus {
 public class Trunk {
 	public int id;
 	public string name;
+	public string description;
 	public TreePlus tree;
 
-	public Trunk(int new_id, string new_name, TreePlus new_tree) {
+	public Trunk(int new_id, string new_name, string new_description, TreePlus new_tree) {
 		id = new_id;
 		name = new_name;
+		description = new_description;
 		tree = new TreePlus(new_tree.name);
 	}
 }
@@ -25,12 +27,14 @@ public class Trunk {
 public class Branch {
 	public int id;
 	public string name;
+	public string description;
 	public Trunk trunk;
 
-	public Branch (int new_id, string new_name, Trunk new_trunk) {
+	public Branch (int new_id, string new_name, string new_description, Trunk new_trunk) {
 		id = new_id;
 		name = new_name;
-		trunk = new Trunk(new_trunk.id, new_trunk.name, new_trunk.tree);
+		description = new_description;
+		trunk = new Trunk(new_trunk.id, new_trunk.name, new_trunk.description, new_trunk.tree);
 	}
 }
 

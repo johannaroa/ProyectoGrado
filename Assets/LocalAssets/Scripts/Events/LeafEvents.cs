@@ -36,25 +36,6 @@ public class LeafEvents : MonoBehaviour {
 		}
 	}
 
-	void Deactivate (GameObject articlePanel) {
-		articlePanel.GetComponent<Image> ().enabled = false;
-		Text[] texts = articlePanel.GetComponentsInChildren<Text> ();
-		Image[] images = articlePanel.GetComponentsInChildren<Image> ();
-
-		foreach (Image image in images) {
-			image.enabled = false;
-		}
-
-		foreach (Text text in texts) {
-			text.enabled = false;
-
-			if (text.transform.name == "CategoriesContent") {
-				text.text = "";
-			}
-		}
-
-	}
-
 	void OnMouseDown() {
 		GameObject articlePanel = GameObject.Find ("ArticlePanel");
 		Activate (articlePanel);

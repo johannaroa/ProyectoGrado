@@ -70,9 +70,9 @@ public class SearchFieldEvents : MonoBehaviour {
 
 				TreePlus tree = new TreePlus ("arbol");
 
-				Trunk trunk = new Trunk (APIRestClient.thematics [0].id, APIRestClient.thematics [0].nombre, tree);
+				Trunk trunk = new Trunk (APIRestClient.thematics [0].id, APIRestClient.thematics [0].nombre, APIRestClient.thematics[0].descripcion, tree);
 
-				Branch branch = new Branch (APIRestClient.categories [j].id, APIRestClient.categories [j].nombre, trunk);
+				Branch branch = new Branch (APIRestClient.categories [j].id, APIRestClient.categories [j].nombre, APIRestClient.categories[j].descripcion, trunk);
 
 				Leaf leaf = FindExistingArticle(leaves, articles [i].id);
 				if (leaf == null) {

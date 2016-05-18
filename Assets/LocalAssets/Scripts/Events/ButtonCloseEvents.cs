@@ -14,10 +14,10 @@ public class ButtonCloseEvents : MonoBehaviour {
 	
 	}
 
-	void Deactivate (GameObject articlePanel) {
-		articlePanel.GetComponent<Image> ().enabled = false;
-		Text[] texts = articlePanel.GetComponentsInChildren<Text> ();
-		Image[] images = articlePanel.GetComponentsInChildren<Image> ();
+	void Deactivate (GameObject panel) {
+		panel.GetComponent<Image> ().enabled = false;
+		Text[] texts = panel.GetComponentsInChildren<Text> ();
+		Image[] images = panel.GetComponentsInChildren<Image> ();
 
 		foreach (Image image in images) {
 			image.enabled = false;
@@ -30,12 +30,20 @@ public class ButtonCloseEvents : MonoBehaviour {
 				text.text = "";
 			}
 		}
-
 	}
 
-	public void Close() {
-		GameObject articlePanel = GameObject.Find ("ArticlePanel");
-		Deactivate (articlePanel);
+	public void CloseLeafPanel() {
+		GameObject panel = GameObject.Find ("ArticlePanel");
+		Deactivate (panel);
 	}
 
+	public void CloseBranchPanel() {
+		GameObject panel = GameObject.Find ("CategoryPanel");
+		Deactivate (panel);
+	}
+
+	public void CloseTrunkPanel() {
+		GameObject panel = GameObject.Find ("ThematicPanel");
+		Deactivate (panel);
+	}
 }
