@@ -10,6 +10,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	public GameObject PrefabTrunk;
 	public GameObject PrefabBranch;
 	public GameObject PrefabLeaf;
+	public GameObject PrefabLiana;
 
 	private List<Leaf> leaves;
 
@@ -157,7 +158,38 @@ public class SearchFieldEvents : MonoBehaviour {
 		leafEvents.leaf = new_leaf;
 		leafEvents.leaf_name = new_leaf.name;
 
+		JoinByLiana (new_leaf);
+
 		return leaf;
+	}
+
+	private void JoinByLiana(Leaf leaf){
+		if (leaf.branchs.Count > 1) {
+			GameObject firstLeaf;
+			List<GameObject> leaves = new List<GameObject> ();
+			int index = 1;
+
+			GameObject[] leafsWithTag = GameObject.FindGameObjectsWithTag ("Leaf");
+
+			foreach(GameObject leafWithTag in leafsWithTag) {
+				if (leafWithTag.name == "Leaf3(Clone)-id" + leaf.id) {
+					leaves.Add (leafWithTag);
+				}
+			}
+			print(leaves.Count);
+
+			Vector3[] points = new Vector3[2];
+			firstLeaf = leaves [0];
+			points [0] = firstLeaf.transform.position;
+
+			while (index < leaves.Count) {
+				GameObject liana = (GameObject)Instantiate (PrefabLiana);
+				points [index] = leaves [index].transform.position;
+				liana.GetComponent<LineRenderer> ().SetPositions (points);
+
+				index += 1;
+			}
+		}
 	}
 
 	private void ShowForest()
