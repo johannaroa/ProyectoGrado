@@ -36,7 +36,7 @@ LineRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 106506}
   m_Enabled: 1
-  m_CastShadows: 0
+  m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
   - {fileID: 2100000, guid: 71b0e81de668446009a4047220719303, type: 2}
@@ -59,8 +59,8 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   m_Parameters:
-    startWidth: 2
-    endWidth: 2
+    startWidth: 1
+    endWidth: 1
     m_StartColor:
       serializedVersion: 2
       rgba: 4294967295
