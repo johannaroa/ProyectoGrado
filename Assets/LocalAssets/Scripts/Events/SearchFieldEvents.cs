@@ -158,33 +158,31 @@ public class SearchFieldEvents : MonoBehaviour {
 		leafEvents.leaf = new_leaf;
 		leafEvents.leaf_name = new_leaf.name;
 
-		JoinByLiana (new_leaf);
-
 		return leaf;
 	}
 
 	private void JoinByLiana(Leaf leaf){
+
 		if (leaf.branchs.Count > 1) {
-			GameObject firstLeaf;
-			List<GameObject> leaves = new List<GameObject> ();
 			int index = 1;
+			GameObject firstLeaf;
+			List<GameObject> leaves_flow = new List<GameObject> ();
+			GameObject[] leavesWithTag = GameObject.FindGameObjectsWithTag ("Leaf");
 
-			GameObject[] leafsWithTag = GameObject.FindGameObjectsWithTag ("Leaf");
-
-			foreach(GameObject leafWithTag in leafsWithTag) {
+			foreach(GameObject leafWithTag in leavesWithTag) {
 				if (leafWithTag.name == "Leaf3(Clone)-id" + leaf.id) {
-					leaves.Add (leafWithTag);
+					leaves_flow.Add (leafWithTag);
 				}
 			}
-			print(leaves.Count);
-
+				
 			Vector3[] points = new Vector3[2];
-			firstLeaf = leaves [0];
+			firstLeaf = leaves_flow [0];
 			points [0] = firstLeaf.transform.position;
 
-			while (index < leaves.Count) {
+			while (index < leaves_flow.Count) {
+
 				GameObject liana = (GameObject)Instantiate (PrefabLiana);
-				points [index] = leaves [index].transform.position;
+				points [1] = leaves_flow [index].transform.position;
 				liana.GetComponent<LineRenderer> ().SetPositions (points);
 
 				index += 1;
@@ -192,7 +190,7 @@ public class SearchFieldEvents : MonoBehaviour {
 		}
 	}
 
-	private void ShowForest()
+	public IEnumerator ShowForest()
 	{
 		Trunk temporalTrunk = null;
 		Branch temporalBranch = null;
@@ -235,8 +233,11 @@ public class SearchFieldEvents : MonoBehaviour {
 					
 				ShowLeaf (leaf, GenerateLeafCoordinates(branchCoordinates), branchAngles, currentBranch);
 			}
+
+			JoinByLiana (leaf);
 		}
 		SetStatus (StatusBuildTree.Idle);
+		yield return new WaitForSeconds (1f);
 	}
 
 	private Vector3 GenerateTrunkCoordinates() {
@@ -314,7 +315,7 @@ public class SearchFieldEvents : MonoBehaviour {
 
 		if ((int)status == 1) {
 		
-			ShowForest ();
+			StartCoroutine(ShowForest ());
 
 		}
 	}
