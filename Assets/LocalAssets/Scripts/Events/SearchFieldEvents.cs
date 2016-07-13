@@ -195,21 +195,34 @@ public class SearchFieldEvents : MonoBehaviour {
 		Trunk temporalTrunk = null;
 		Branch temporalBranch = null;
 		GameObject currentTree = null, currentTrunk = null, currentBranch = null;
+		TrunkEvents existingTrunk = null;
 		Vector3 trunkCoordinates = Vector3.zero, branchCoordinates = Vector3.zero, branchAngles = Vector3.zero;
 
 		foreach(Leaf leaf in leaves) {
 
 			foreach (Branch branch in leaf.branchs) {
-				// print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
+				print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
 
 				if (temporalTrunk == null || temporalTrunk.id != branch.trunk.id) {
 
-					trunkCoordinates = GenerateTrunkCoordinates ();
+					if (currentTrunk != null) {
+						existingTrunk = FindExistingTrunk (branch.trunk);
+					}
 
-					currentTree = ShowTree (trunkCoordinates);
-					currentTrunk = ShowTrunk (branch.trunk, trunkCoordinates, currentTree);
+					if (existingTrunk == null) {
+						trunkCoordinates = GenerateTrunkCoordinates ();
 
-					temporalTrunk = branch.trunk;
+						currentTree = ShowTree (trunkCoordinates);
+						currentTrunk = ShowTrunk (branch.trunk, trunkCoordinates, currentTree);
+
+						temporalTrunk = branch.trunk;
+					} else {
+						trunkCoordinates = existingTrunk.transform.position;
+
+						currentTrunk = existingTrunk.gameObject;
+						temporalTrunk = branch.trunk;
+					}
+			
 				}
 					
 				if (temporalBranch == null || temporalBranch.id != branch.id) {
@@ -275,6 +288,19 @@ public class SearchFieldEvents : MonoBehaviour {
 		Vector3 coordinates = new Vector3 (x, y, z);
 
 		return coordinates;
+	}
+
+	private TrunkEvents FindExistingTrunk (Trunk trunk) {
+		TrunkEvents[] trunkEvents = GameObject.FindObjectsOfType<TrunkEvents>();
+
+		foreach(TrunkEvents trunkEvent in trunkEvents) {
+			// print ("ID: " + trunkEvent.trunk.id + "ID param trunk: " + trunk.id);
+
+			if (trunkEvent.trunk.id == trunk.id) {
+				return trunkEvent;
+			}
+		}
+		return null;
 	}
 
 	private BranchEvents FindExistingBranch (GameObject trunk, Branch branch) {
