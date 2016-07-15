@@ -33,6 +33,7 @@ public class BranchEvents : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
+		print ("Ahora me dio por no salir");
 		GameObject categoryPanel = GameObject.Find ("CategoryPanel");
 		Activate (categoryPanel);
 	}
