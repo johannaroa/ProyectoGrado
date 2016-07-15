@@ -16,7 +16,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	private List<Leaf> leaves;
 	// Valores no permitidos como vertices firmes: 0, 1, 11, 12, 22, 23, 33, 34
 	// 25, 35, estos si quedan ubicados y se puede clickear pero quedan feos
-	int[] ValidVerticesChoices = new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 26, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40, 41, 42, 43};
+	int[] ValidVerticesChoices = new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 26, 27, 28, 29, 30, 31, 32, 36, 37, 38, 39, 40, 41, 42, 43};
 
 	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
 	StatusBuildTree status = StatusBuildTree.Idle;
