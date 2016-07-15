@@ -13,6 +13,9 @@ public class SearchFieldEvents : MonoBehaviour {
 	public GameObject PrefabLiana;
 
 	private List<Leaf> leaves;
+	// Valores no permitidos como vertices firmes: 0, 1, 11, 12, 22, 23, 33, 34
+	// 25, 35, estos si quedan ubicados y se puede clickear pero quedan feos
+	int[] ValidVerticesChoices = new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 26, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40, 41, 42, 43};
 
 	enum StatusBuildTree {Failed, Completed, Init, InProcess, Idle};
 	StatusBuildTree status = StatusBuildTree.Idle;
@@ -137,9 +140,10 @@ public class SearchFieldEvents : MonoBehaviour {
 	private GameObject ShowLeaf(Leaf new_leaf, Vector3 coordinates, Vector3 branchAngles, GameObject branch)
 	{
 		Vector3[] vertices = branch.GetComponent<MeshFilter>().mesh.vertices;
-		int vertice_random = Random.Range (5, vertices.Length);
-		Vector3 vectorGlobal = branch.transform.TransformPoint (vertices [vertice_random]);
+		int VerticeRandom = ValidVerticesChoices[Random.Range (0, ValidVerticesChoices.Length)];
+		// print ("Vexter index: " + vertice_random + " Leaf name: " + new_leaf.name);
 
+		Vector3 vectorGlobal = branch.transform.TransformPoint (vertices [VerticeRandom]);
 		vectorGlobal.y = vectorGlobal.y + 0.4f;
 
 		GameObject leaf = (GameObject)Instantiate (
@@ -201,7 +205,7 @@ public class SearchFieldEvents : MonoBehaviour {
 		foreach(Leaf leaf in leaves) {
 
 			foreach (Branch branch in leaf.branchs) {
-				print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
+				// print (leaf.name + " # " + branch.name + " > " + branch.trunk.name);
 
 				if (temporalTrunk == null || temporalTrunk.id != branch.trunk.id) {
 
