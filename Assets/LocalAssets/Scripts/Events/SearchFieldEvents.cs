@@ -11,6 +11,7 @@ public class SearchFieldEvents : MonoBehaviour {
 	public GameObject PrefabBranch;
 	public GameObject PrefabLeaf;
 	public GameObject PrefabLiana;
+	public GameObject PrefabLoading;
 
 	private List<Leaf> leaves;
 	// Valores no permitidos como vertices firmes: 0, 1, 11, 12, 22, 23, 33, 34
@@ -254,6 +255,7 @@ public class SearchFieldEvents : MonoBehaviour {
 			JoinByLiana (leaf);
 		}
 		SetStatus (StatusBuildTree.Idle);
+		RemoveSpinner ();
 		yield return new WaitForSeconds (1f);
 	}
 
@@ -317,7 +319,27 @@ public class SearchFieldEvents : MonoBehaviour {
 		}
 		return null;
 	}
-		
+
+	void ShowSpinner() {
+		Vector3 ForestCamPosition = GameObject.Find ("ForestCamera").transform.position;
+		Vector3 LoadingPosition = ForestCamPosition;
+		LoadingPosition.z = ForestCamPosition.z + 10f;
+		Instantiate (PrefabLoading, LoadingPosition, Quaternion.identity);
+
+		GameObject searchSpot = GameObject.Find ("SearchField");
+		searchSpot.GetComponentInChildren<Image> ().enabled = false;
+		searchSpot.GetComponentInChildren<Text> ().enabled = false;
+	}
+
+	void RemoveSpinner() {
+
+		Destroy (GameObject.Find("Loading(Clone)"));
+
+		GameObject searchSpot = GameObject.Find ("SearchField");
+		searchSpot.GetComponentInChildren<Image> ().enabled = true;
+		searchSpot.GetComponentInChildren<Text> ().enabled = true;
+	}
+
 	private void InitListener() 
 	{
 		// TODO: Probar si en vez de poner esto aquí, que resultado da usar el evento OnEndEdit (en el GUI)
@@ -338,16 +360,15 @@ public class SearchFieldEvents : MonoBehaviour {
 	{
 
 		if (APIRestClient.resultsAPI.Length > 0 && (int)status == 2) {
-
 			StartCoroutine(BuildStructureTree (APIRestClient.resultsAPI));
 			SetStatus (StatusBuildTree.InProcess);
+			ShowSpinner ();
 		}
 
 		if ((int)status == 1) {
-		
 			StartCoroutine(ShowForest ());
-
 		}
+			
 	}
 
 }
