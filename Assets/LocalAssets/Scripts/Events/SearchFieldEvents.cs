@@ -321,10 +321,9 @@ public class SearchFieldEvents : MonoBehaviour {
 	}
 
 	void ShowSpinner() {
-		Vector3 ForestCamPosition = GameObject.Find ("ForestCamera").transform.position;
-		Vector3 LoadingPosition = ForestCamPosition;
-		LoadingPosition.z = ForestCamPosition.z + 10f;
-		Instantiate (PrefabLoading, LoadingPosition, Quaternion.identity);
+		Transform ForestCameraTransform = GameObject.Find ("ForestCamera").transform;
+
+		Instantiate(PrefabLoading, ForestCameraTransform.position + ForestCameraTransform.forward * 10, ForestCameraTransform.rotation);
 
 		GameObject searchSpot = GameObject.Find ("SearchField");
 		searchSpot.GetComponentInChildren<Image> ().enabled = false;
