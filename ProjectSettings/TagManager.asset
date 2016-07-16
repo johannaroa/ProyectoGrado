@@ -8,6 +8,7 @@ TagManager:
   - Leaf
   - Branch
   - GenerateTree
+  - Trunk
   layers:
   - Default
   - TransparentFX
