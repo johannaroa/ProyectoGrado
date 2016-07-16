@@ -187,6 +187,7 @@ public class SearchFieldEvents : MonoBehaviour {
 			while (index < leaves_flow.Count) {
 
 				GameObject liana = (GameObject)Instantiate (PrefabLiana);
+				liana.transform.SetParent (firstLeaf.transform);
 				points [1] = leaves_flow [index].transform.position;
 				liana.GetComponent<LineRenderer> ().SetPositions (points);
 
