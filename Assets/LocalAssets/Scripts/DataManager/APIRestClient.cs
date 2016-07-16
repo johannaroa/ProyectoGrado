@@ -69,7 +69,7 @@ public class APIRestClient: ScriptableObject {
 		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 		string endPoint = "/forest/v1/articles/";
 
-		UnityWebRequest webRequest = UnityWebRequest.Delete (url + endPoint + leafId);
+		UnityWebRequest webRequest = UnityWebRequest.Delete (url + endPoint + leafId + "/");
 		yield return webRequest.Send ();
 
 		if(webRequest.isError) {
@@ -84,7 +84,7 @@ public class APIRestClient: ScriptableObject {
 		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 		string endPoint = "/forest/v1/categories/";
 
-		UnityWebRequest webRequest = UnityWebRequest.Delete (url + endPoint + branchId);
+		UnityWebRequest webRequest = UnityWebRequest.Delete (url + endPoint + branchId + "/");
 		yield return webRequest.Send ();
 
 		if(webRequest.isError) {
@@ -99,7 +99,7 @@ public class APIRestClient: ScriptableObject {
 		url = GameObject.Find ("GlobalManager").GetComponent<GlobalManager> ().url;
 		string endPoint = "/forest/v1/thematics/";
 
-		UnityWebRequest webRequest = UnityWebRequest.Delete (url + endPoint + trunkId);
+		UnityWebRequest webRequest = UnityWebRequest.Delete (url + endPoint + trunkId + "/");
 		yield return webRequest.Send ();
 
 		if(webRequest.isError) {

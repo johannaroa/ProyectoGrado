@@ -27,7 +27,7 @@ public class ButtonDeleteEvents : MonoBehaviour {
 		int id = PlayerPrefs.GetInt ("trunkId");
 
 		StartCoroutine (apiRestClient.DeleteThematic(id));
-		Destroy(GameObject.Find ("Branch1(Clone)-id" + id));
+		Destroy(GameObject.Find ("Trunk(Clone)-id" + id));
 	}
 
 	// Use this for initialization
