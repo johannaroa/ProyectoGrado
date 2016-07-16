@@ -28,4 +28,8 @@ public class GlobalManager : MonoBehaviour {
 	void Update () {
 
 	}
+
+	void OnApplicationQuit() {
+		PlayerPrefs.SetString ("query", null);
+	}
 }
